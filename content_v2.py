@@ -145,5 +145,6 @@ CONTACT = """
 <h1>Contact</h1>
 <p>Found an error in a formula, need a calculator that is not here, or want to suggest an improvement? Please open a short request on our public tracker. No account details or personal data are needed beyond what GitHub itself asks for.</p>
 <p><a href="https://github.com/dodid-kk/shopfloor-cost/issues/new?title=Calculator%20request%3A%20&labels=request">Request a calculator or report an error →</a></p>
+<p>You can also email us at <a href="mailto:contact@everysolver.com">contact@everysolver.com</a>. We read every message and usually reply within two working days.</p>
 <p>Requests that come up more than once are added first. Corrections to formulas are checked and published within a few days.</p>
 """

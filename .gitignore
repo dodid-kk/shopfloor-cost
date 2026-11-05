@@ -3,3 +3,4 @@ shot_*.png
 __pycache__/
 shot_*.png
 .env
+.chrome-profile/
