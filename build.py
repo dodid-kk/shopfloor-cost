@@ -24,7 +24,7 @@ REVIEWED = date.today().strftime("%B %Y")
 
 ROOT = Path(__file__).parent
 OUT = ROOT / "docs"
-BASE = os.getenv("BASE_URL", "https://dodid-kk.github.io/shopfloor-cost/").rstrip("/") + "/"
+BASE = os.getenv("BASE_URL", "https://everysolver.com/").rstrip("/") + "/"
 SECTIONS = json.loads((ROOT / "src" / "sections.json").read_text(encoding="utf-8"))
 TODAY = date.today().isoformat()
 ADSENSE_CLIENT = os.getenv("ADSENSE_CLIENT", "")  # ca-pub-XXXX once approved; empty = no ad script
@@ -75,8 +75,8 @@ def top(depth: int, current: str = "", show_currency: bool = True) -> str:
     return f"""
   <header class="top">
     <div>
-      <div class="brand"><a href="{up or './'}">Shopfloor<span>/</span>Cost</a></div>
-      <div class="tag">Free cost calculators for manufacturers, importers and small makers</div>
+      <div class="brand"><a href="{up or './'}">Every<span>Solver</span></a></div>
+      <div class="tag">Free calculators that solve real work problems · manufacturing &amp; cost</div>
     </div>
     {CURRENCY if show_currency else ''}
   </header>
@@ -89,7 +89,7 @@ def foot(depth: int, script: bool = True) -> str:
     return f"""
   <footer>
     <span>Estimates for planning only. Confirm duty rates and tax rules with your customs broker or accountant.</span>
-    <span><a href="{up}about/">About</a> · <a href="{up}contact/">Contact</a> · <a href="{up}privacy/">Privacy</a> · Shopfloor/Cost</span>
+    <span><a href="{up}about/">About</a> · <a href="{up}contact/">Contact</a> · <a href="{up}privacy/">Privacy</a> · EverySolver</span>
   </footer>
 </div>
 {js}
@@ -165,9 +165,9 @@ def build() -> None:
         (d / "index.html").write_text(calc_page(p), encoding="utf-8")
         urls.append(f"{BASE}{p['slug']}/")
     for slug, title, desc, inner in [
-        ("about", "About – Shopfloor/Cost", "Who makes Shopfloor/Cost and how the calculators work.", ABOUT),
-        ("privacy", "Privacy Policy – Shopfloor/Cost", "Privacy policy for Shopfloor/Cost.", PRIVACY.replace("{date}", TODAY)),
-        ("contact", "Contact – Shopfloor/Cost", "Report an error or request a new manufacturing calculator.", CONTACT),
+        ("about", "About – EverySolver", "Who makes EverySolver and how the calculators work.", ABOUT),
+        ("privacy", "Privacy Policy – EverySolver", "Privacy policy for EverySolver.", PRIVACY.replace("{date}", TODAY)),
+        ("contact", "Contact – EverySolver", "Report an error or request a new manufacturing calculator.", CONTACT),
     ]:
         d = OUT / slug; d.mkdir()
         (d / "index.html").write_text(text_page(slug, title, desc, inner), encoding="utf-8")
@@ -176,7 +176,7 @@ def build() -> None:
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"  <url><loc>{u}</loc><lastmod>{TODAY}</lastmod></url>\n" for u in urls) + "</urlset>\n", encoding="utf-8")
     (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {BASE}sitemap.xml\n", encoding="utf-8")
-    (OUT / "404.html").write_text(text_page("404", "Page not found – Shopfloor/Cost", "Page not found.",
+    (OUT / "404.html").write_text(text_page("404", "Page not found – EverySolver", "Page not found.",
                                             f'<h1>Page not found</h1><p><a href="{BASE}">Go to the calculators</a></p>'), encoding="utf-8")
     (OUT / ".nojekyll").write_text("", encoding="utf-8")
     if ADSENSE_CLIENT:

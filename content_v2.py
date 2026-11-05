@@ -13,7 +13,7 @@ NEW_PAGES = [
     {
         "slug": "machine-hour-rate-calculator",
         "section": "machine-hour-rate",
-        "title": "Machine Hour Rate Calculator – Cost per Machine Hour | Shopfloor/Cost",
+        "title": "Machine Hour Rate Calculator – Cost per Machine Hour | EverySolver",
         "description": "Calculate the hourly cost of a machine from depreciation, interest, floor space, maintenance and energy, with or without the operator. Free.",
         "nav": "Machine hour rate",
         "blurb": "Hourly cost of a machine for quoting, with or without the operator.",

@@ -8,7 +8,7 @@ PAGES = [
     {
         "slug": "landed-cost-calculator",
         "section": "landed-cost",
-        "title": "Landed Cost Calculator (CIF & FOB Duty) – Free | Shopfloor/Cost",
+        "title": "Landed Cost Calculator (CIF & FOB Duty) – Free | EverySolver",
         "description": "Calculate the landed cost per unit of imported goods: freight, insurance, duty on CIF or FOB value, customs and broker fees. Free, no sign-up.",
         "nav": "Landed cost",
         "blurb": "True cost of an imported part after freight, insurance, duty and fees.",
@@ -48,7 +48,7 @@ PAGES = [
     {
         "slug": "cost-per-good-unit-calculator",
         "section": "cost-per-good-unit",
-        "title": "Cost per Good Unit Calculator (Yield & Scrap) – Free | Shopfloor/Cost",
+        "title": "Cost per Good Unit Calculator (Yield & Scrap) – Free | EverySolver",
         "description": "See the real unit cost after yield losses. Spread material, labor and overhead of rejected parts over the good units you can ship. Free calculator.",
         "nav": "Cost per good unit",
         "blurb": "Unit cost after yield losses, with the scrap cost hidden in every good part.",
@@ -87,7 +87,7 @@ PAGES = [
     {
         "slug": "scrap-cost-calculator",
         "section": "scrap-cost",
-        "title": "Scrap & Rework Cost Calculator – Yearly Quality Loss | Shopfloor/Cost",
+        "title": "Scrap & Rework Cost Calculator – Yearly Quality Loss | EverySolver",
         "description": "Turn scrap and rework rates into a yearly money figure and see the saving from a lower target scrap rate. Free cost of poor quality calculator.",
         "nav": "Scrap & rework",
         "blurb": "Yearly money lost to scrap and rework, and the saving from a better rate.",
@@ -156,7 +156,7 @@ PAGES = [
     {
         "slug": "equipment-payback-calculator",
         "section": "payback",
-        "title": "Equipment Payback, ROI, NPV & IRR Calculator for Machines | Shopfloor/Cost",
+        "title": "Equipment Payback, ROI, NPV & IRR Calculator for Machines | EverySolver",
         "description": "Check whether a new machine or automation cell pays for itself: simple payback, lifetime ROI, NPV and IRR with a cumulative cash flow chart. Free.",
         "nav": "Equipment payback",
         "blurb": "Payback period, ROI, NPV and IRR for a new machine or automation cell.",
@@ -196,8 +196,8 @@ PAGES = [
 ]
 
 ABOUT = """
-<h1>About Shopfloor/Cost</h1>
-<p>Shopfloor/Cost is a small set of free calculators for people who make and buy physical products: plant managers, cost accountants, buyers, importers and small makers. Each one answers a single cost question in plain numbers and shows the formula it uses, so you can check the result or rebuild it in a spreadsheet.</p>
+<h1>About EverySolver</h1>
+<p>EverySolver is a growing set of free calculators that solve real work problems in plain numbers. The first section covers manufacturing and cost, for people who make and buy physical products: plant managers, cost accountants, buyers, importers and small makers. Each one answers a single cost question in plain numbers and shows the formula it uses, so you can check the result or rebuild it in a spreadsheet.</p>
 <p>The calculators were written by someone who spent more than a decade developing production equipment and later worked in cost management, and kept rebuilding the same spreadsheets for every new project. The aim is to save you that time.</p>
 <h2>How the numbers work</h2>
 <p>All calculations run in your browser. Nothing you type is sent to a server or stored, except your currency choice, which your browser remembers for the next visit.</p>

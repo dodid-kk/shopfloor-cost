@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://dodid-kk.github.io/shopfloor-cost/sitemap.xml
+Sitemap: https://everysolver.com/sitemap.xml

@@ -1,4 +1,4 @@
-# Shopfloor/Cost
+# EverySolver (everysolver.com)
 
 Free English manufacturing cost calculators (landed cost, cost per good unit, scrap & rework, break-even, equipment payback).
 
