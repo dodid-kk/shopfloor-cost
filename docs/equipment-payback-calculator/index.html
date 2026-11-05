@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Equipment Payback, ROI &amp; NPV Calculator for Machines | Shopfloor/Cost</title>
+<meta name="description" content="Check whether a new machine or automation cell pays for itself: simple payback, lifetime ROI and NPV with a cumulative cash flow chart. Free.">
+<link rel="canonical" href="https://dodid-kk.github.io/shopfloor-cost/equipment-payback-calculator/">
+<meta property="og:title" content="Equipment Payback, ROI &amp; NPV Calculator for Machines | Shopfloor/Cost">
+<meta property="og:description" content="Check whether a new machine or automation cell pays for itself: simple payback, lifetime ROI and NPV with a cumulative cash flow chart. Free.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dodid-kk.github.io/shopfloor-cost/equipment-payback-calculator/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23c2410c'/%3E%3Cpath d='M4 12V4h3a2 2 0 010 4H4m5 4l3-8' stroke='white' stroke-width='1.6' fill='none'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Equipment Payback, ROI & NPV Calculator for Machines", "url": "https://dodid-kk.github.io/shopfloor-cost/equipment-payback-calculator/", "applicationCategory": "BusinessApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is a good payback period for a machine?", "acceptedAnswer": {"@type": "Answer", "text": "Under 2\u20133 years is the usual target for cost-saving equipment. Longer paybacks need a strong NPV or a strategic reason."}}, {"@type": "Question", "name": "What discount rate should I use?", "acceptedAnswer": {"@type": "Answer", "text": "Your company's weighted cost of capital or the hurdle rate finance sets for projects, typically 8\u201312%."}}, {"@type": "Question", "name": "Why can payback be good but NPV negative?", "acceptedAnswer": {"@type": "Answer", "text": "If the useful life is short, the machine may repay its cost but earn too little afterwards to beat the discount rate."}}, {"@type": "Question", "name": "Does this include tax and depreciation?", "acceptedAnswer": {"@type": "Answer", "text": "No. It is a pre-tax cash view, which is the usual first screen. Ask finance for the after-tax version before approval."}}]}</script>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="brand"><a href="../">Shopfloor<span>/</span>Cost</a></div>
+      <div class="tag">Free cost calculators for manufacturers, importers and small makers</div>
+    </div>
+    <label class="cur" for="cur">Currency
+      <select id="cur">
+        <option value="USD">USD $</option><option value="EUR">EUR €</option><option value="GBP">GBP £</option>
+        <option value="JPY">JPY ¥</option><option value="KRW">KRW ₩</option>
+      </select>
+    </label>
+  </header>
+  <nav class="site-nav" aria-label="Calculators"><a href="../landed-cost-calculator/">Landed cost</a><a href="../cost-per-good-unit-calculator/">Cost per good unit</a><a href="../scrap-cost-calculator/">Scrap &amp; rework</a><a href="../break-even-calculator/">Break-even</a><a href="../equipment-payback-calculator/" aria-current="page">Equipment payback</a></nav>
+  <section class="sheet" id="v-payback">
+    <h1>Equipment Payback &amp; ROI Calculator</h1>
+    <p class="lede">Test whether a new machine, fixture or automation cell pays for itself, and how fast.</p>
+    <div class="grid">
+      <div class="fields">
+        <div class="f"><label for="pb-inv">Investment <span class="u">purchase + install</span></label><input id="pb-inv" type="number" step="any" value="185000"></div>
+        <div class="f"><label for="pb-life">Useful life <span class="u">years</span></label><input id="pb-life" type="number" step="1" value="7"></div>
+        <div class="f"><label for="pb-labor">Labor savings <span class="u">per year</span></label><input id="pb-labor" type="number" step="any" value="52000"></div>
+        <div class="f"><label for="pb-qual">Scrap / quality savings <span class="u">per year</span></label><input id="pb-qual" type="number" step="any" value="14000"></div>
+        <div class="f"><label for="pb-op">Added running cost <span class="u">power, upkeep / year</span></label><input id="pb-op" type="number" step="any" value="9500"></div>
+        <div class="f"><label for="pb-rate">Discount rate <span class="u">% / year</span></label><input id="pb-rate" type="number" step="any" value="8"></div>
+      </div>
+      <div class="result" aria-live="polite">
+        <div class="kicker">Simple payback</div>
+        <div class="big" id="pb-out">–</div>
+        <div class="sub" id="pb-sub"></div>
+        <svg id="pb-svg" viewBox="0 0 320 120" width="100%" role="img" aria-label="Cumulative cash flow by year" style="margin-top:14px;max-width:100%"></svg>
+        <table class="bd" id="pb-tbl"></table>
+        <div id="pb-pill"></div>
+      </div>
+    </div>
+    <div class="ad" aria-hidden="true">Advertisement</div>
+    <div class="notes">
+      <div><h2>How it works</h2><code class="fx">Net saving = labor + quality − running cost
+Payback    = investment ÷ net saving
+ROI        = (net saving × life − investment)
+             ÷ investment
+NPV        = Σ net saving ÷ (1+r)^t − investment</code></div>
+      <div><h2>Reading the result</h2><p>Many plants approve projects that pay back in under 2–3 years. NPV is the stricter test: a positive NPV means the machine earns more than leaving the money at your discount rate.</p></div>
+    </div>
+  </section>
+  <article class="guide"><h2>Three ways to judge an investment</h2>
+<p><b>Simple payback</b> answers how long until the savings have repaid the purchase price. It is easy to explain and favoured by plant managers, but it ignores what happens after the payback date.</p>
+<p><b>ROI over the useful life</b> compares total net savings with the investment. It shows whether the machine earns its cost several times over or only just covers it.</p>
+<p><b>NPV</b> discounts each year's saving back to today at your cost of capital. A positive NPV means the machine earns more than the money would earn elsewhere at that rate. It is the strictest of the three.</p><h2>Worked example</h2>
+<p>The defaults describe an automation cell costing $185,000 installed, saving $52,000 of labor and $14,000 of scrap a year, and adding $9,500 of power and maintenance, over a 7-year life at an 8% discount rate.</p>
+<table><tr><th>Item</th><th>Value</th></tr>
+<tr><td>Net saving per year</td><td class="n">$56,500</td></tr>
+<tr><td>Simple payback</td><td class="n">3.3 years</td></tr>
+<tr><td>Lifetime net saving</td><td class="n">$395,500</td></tr>
+<tr><td>ROI over 7 years</td><td class="n">114%</td></tr>
+<tr><td>NPV at 8%</td><td class="n">about $109,000</td></tr></table><h2>What to include</h2>
+<ul>
+<li><b>Investment:</b> purchase price, freight, installation, utilities hook-up, guarding, tooling, programming and training.</li>
+<li><b>Savings:</b> labor hours actually removed (not just freed up), scrap and rework avoided, energy saved, and subcontracting brought in-house.</li>
+<li><b>Added costs:</b> power, consumables, maintenance contracts, spare parts and software licences.</li>
+</ul>
+<p>Labor savings are only real if the hours are removed or redeployed to work that earns money. If the operator stays and simply watches the machine, the saving is zero.</p><h2>Typical approval thresholds</h2>
+<p>Many manufacturers approve projects that pay back in two to three years, and automation projects are often held to the same bar. Strategic investments, such as capacity for a new customer, may be approved on a longer payback if the NPV is positive. Use the discount rate your finance team uses for capital requests, often between 8% and 12%.</p><h2>Frequently asked questions</h2><h3>What is a good payback period for a machine?</h3><p>Under 2–3 years is the usual target for cost-saving equipment. Longer paybacks need a strong NPV or a strategic reason.</p><h3>What discount rate should I use?</h3><p>Your company&#x27;s weighted cost of capital or the hurdle rate finance sets for projects, typically 8–12%.</p><h3>Why can payback be good but NPV negative?</h3><p>If the useful life is short, the machine may repay its cost but earn too little afterwards to beat the discount rate.</p><h3>Does this include tax and depreciation?</h3><p>No. It is a pre-tax cash view, which is the usual first screen. Ask finance for the after-tax version before approval.</p><h2>More calculators</h2><div class="related"><a href="../landed-cost-calculator/"><b>Landed cost</b><span>True cost of an imported part after freight, insurance, duty and fees.</span></a><a href="../cost-per-good-unit-calculator/"><b>Cost per good unit</b><span>Unit cost after yield losses, with the scrap cost hidden in every good part.</span></a><a href="../scrap-cost-calculator/"><b>Scrap &amp; rework</b><span>Yearly money lost to scrap and rework, and the saving from a better rate.</span></a><a href="../break-even-calculator/"><b>Break-even</b><span>Units per month before a product makes money, and how safe your forecast is.</span></a></div></article>
+  <footer>
+    <span>Estimates for planning only. Confirm duty rates and tax rules with your customs broker or accountant.</span>
+    <span><a href="../about/">About</a> · <a href="../privacy/">Privacy</a> · Shopfloor/Cost</span>
+  </footer>
+</div>
+<script src="../assets/calc.js"></script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Cost per Good Unit Calculator (Yield &amp; Scrap) – Free | Shopfloor/Cost</title>
+<meta name="description" content="See the real unit cost after yield losses. Spread material, labor and overhead of rejected parts over the good units you can ship. Free calculator.">
+<link rel="canonical" href="https://dodid-kk.github.io/shopfloor-cost/cost-per-good-unit-calculator/">
+<meta property="og:title" content="Cost per Good Unit Calculator (Yield &amp; Scrap) – Free | Shopfloor/Cost">
+<meta property="og:description" content="See the real unit cost after yield losses. Spread material, labor and overhead of rejected parts over the good units you can ship. Free calculator.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dodid-kk.github.io/shopfloor-cost/cost-per-good-unit-calculator/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23c2410c'/%3E%3Cpath d='M4 12V4h3a2 2 0 010 4H4m5 4l3-8' stroke='white' stroke-width='1.6' fill='none'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Cost per Good Unit Calculator (Yield & Scrap)", "url": "https://dodid-kk.github.io/shopfloor-cost/cost-per-good-unit-calculator/", "applicationCategory": "BusinessApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is first-pass yield?", "acceptedAnswer": {"@type": "Answer", "text": "The share of units that pass every inspection the first time, without rework. It is the honest measure of a process because rework hides losses."}}, {"@type": "Question", "name": "How do I calculate yield for a multi-step process?", "acceptedAnswer": {"@type": "Answer", "text": "Multiply the yield of each step. This is called rolled throughput yield. Enter the result as the first-pass yield."}}, {"@type": "Question", "name": "Should overhead be included?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, if the rejected unit consumed machine time. Overhead that does not change with output, such as rent, is already spread over good units by your costing system."}}, {"@type": "Question", "name": "What counts as salvage value?", "acceptedAnswer": {"@type": "Answer", "text": "Anything you recover from a rejected unit: scrap metal sold by weight, reusable components, or a rebate from the material supplier."}}]}</script>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="brand"><a href="../">Shopfloor<span>/</span>Cost</a></div>
+      <div class="tag">Free cost calculators for manufacturers, importers and small makers</div>
+    </div>
+    <label class="cur" for="cur">Currency
+      <select id="cur">
+        <option value="USD">USD $</option><option value="EUR">EUR €</option><option value="GBP">GBP £</option>
+        <option value="JPY">JPY ¥</option><option value="KRW">KRW ₩</option>
+      </select>
+    </label>
+  </header>
+  <nav class="site-nav" aria-label="Calculators"><a href="../landed-cost-calculator/">Landed cost</a><a href="../cost-per-good-unit-calculator/" aria-current="page">Cost per good unit</a><a href="../scrap-cost-calculator/">Scrap &amp; rework</a><a href="../break-even-calculator/">Break-even</a><a href="../equipment-payback-calculator/">Equipment payback</a></nav>
+  <section class="sheet" id="v-cost-per-good-unit">
+    <h1>Cost per Good Unit Calculator</h1>
+    <p class="lede">Every rejected part still used material, labor and machine time. This spreads that cost over the parts you can actually ship.</p>
+    <div class="grid">
+      <div class="fields">
+        <div class="f"><label for="cg-mat">Material cost <span class="u">per unit started</span></label><input id="cg-mat" type="number" step="any" value="2.80"></div>
+        <div class="f"><label for="cg-conv">Labor + overhead <span class="u">per unit started</span></label><input id="cg-conv" type="number" step="any" value="1.65"></div>
+        <div class="f"><label for="cg-start">Units started <span class="u">per batch</span></label><input id="cg-start" type="number" step="1" value="12000"></div>
+        <div class="f"><label for="cg-yield">First-pass yield <span class="u">%</span></label><input id="cg-yield" type="number" step="any" value="91.5"></div>
+        <div class="f full"><label for="cg-salv">Scrap salvage value <span class="u">per rejected unit</span></label><input id="cg-salv" type="number" step="any" value="0.15"></div>
+      </div>
+      <div class="result" aria-live="polite">
+        <div class="kicker">Cost per good unit</div>
+        <div class="big" id="cg-out">–</div>
+        <div class="sub" id="cg-sub"></div>
+        <div class="bar" id="cg-bar"></div>
+        <div class="legend" id="cg-leg"></div>
+        <table class="bd" id="cg-tbl"></table>
+      </div>
+    </div>
+    <div class="ad" aria-hidden="true">Advertisement</div>
+    <div class="notes">
+      <div><h2>How it works</h2><code class="fx">Good units   = units started × yield
+Total cost   = started × (material + conversion)
+             − rejects × salvage
+Cost / good  = total cost ÷ good units</code></div>
+      <div><h2>Why yield matters</h2><p>At 90% yield, each good part carries the cost of about 1.11 parts. Raising yield from 90% to 95% cuts that to 1.05, which lowers unit cost by about 5% without touching material prices.</p></div>
+    </div>
+  </section>
+  <article class="guide"><h2>Why the standard cost is too low</h2>
+<p>A standard cost sheet usually adds material, labor and overhead for one unit and stops there. But no line runs at 100% yield. Every part that fails inspection used the same material, machine time and labor as a good one, and that cost has to be recovered from the parts you actually ship.</p>
+<p>The cost per good unit puts that hidden cost back where it belongs. It is the figure to use when you quote prices, compare suppliers or decide whether a yield project is worth funding.</p><h2>Worked example</h2>
+<p>With the default values, a batch of 12,000 units costs $2.80 of material and $1.65 of labor and overhead per unit started, and first-pass yield is 91.5%.</p>
+<table><tr><th>Step</th><th>Amount</th></tr>
+<tr><td>Cost of units started (12,000 × $4.45)</td><td class="n">$53,400.00</td></tr>
+<tr><td>Good units (91.5%)</td><td class="n">10,980</td></tr>
+<tr><td>Rejected units</td><td class="n">1,020</td></tr>
+<tr><td>Salvage (1,020 × $0.15)</td><td class="n">−$153.00</td></tr>
+<tr><td><b>Cost per good unit</b></td><td class="n"><b>$4.849</b></td></tr></table>
+<p>The perfect-run cost is $4.45, so poor yield adds about 9% to every unit you sell.</p><h2>How yield changes unit cost</h2>
+<p>The multiplier is simply 1 ÷ yield. At 80% each good part carries 1.25 parts' worth of cost; at 90%, 1.11; at 95%, 1.05; at 99%, 1.01. The curve is steep at low yields, which is why the first few points of improvement on an immature process are worth far more than the last few on a mature one.</p>
+<table><tr><th>Yield</th><th>Cost multiplier</th></tr>
+<tr><td>80%</td><td class="n">1.250</td></tr><tr><td>90%</td><td class="n">1.111</td></tr>
+<tr><td>95%</td><td class="n">1.053</td></tr><tr><td>99%</td><td class="n">1.010</td></tr></table><h2>Common mistakes</h2>
+<ul>
+<li><b>Using final yield instead of first-pass yield.</b> If rejects are reworked and later pass, use the rework calculator for that cost and keep only true scrap here.</li>
+<li><b>Applying yield to purchased parts that are not consumed.</b> If a rejected assembly can be stripped and its components reused, enter their value as salvage.</li>
+<li><b>Multi-step lines.</b> Rolled throughput yield is the product of each step's yield. Three steps at 97% give 91.3%, not 97%.</li>
+</ul><h2>Frequently asked questions</h2><h3>What is first-pass yield?</h3><p>The share of units that pass every inspection the first time, without rework. It is the honest measure of a process because rework hides losses.</p><h3>How do I calculate yield for a multi-step process?</h3><p>Multiply the yield of each step. This is called rolled throughput yield. Enter the result as the first-pass yield.</p><h3>Should overhead be included?</h3><p>Yes, if the rejected unit consumed machine time. Overhead that does not change with output, such as rent, is already spread over good units by your costing system.</p><h3>What counts as salvage value?</h3><p>Anything you recover from a rejected unit: scrap metal sold by weight, reusable components, or a rebate from the material supplier.</p><h2>More calculators</h2><div class="related"><a href="../landed-cost-calculator/"><b>Landed cost</b><span>True cost of an imported part after freight, insurance, duty and fees.</span></a><a href="../scrap-cost-calculator/"><b>Scrap &amp; rework</b><span>Yearly money lost to scrap and rework, and the saving from a better rate.</span></a><a href="../break-even-calculator/"><b>Break-even</b><span>Units per month before a product makes money, and how safe your forecast is.</span></a><a href="../equipment-payback-calculator/"><b>Equipment payback</b><span>Payback period, ROI and NPV for a new machine or automation cell.</span></a></div></article>
+  <footer>
+    <span>Estimates for planning only. Confirm duty rates and tax rules with your customs broker or accountant.</span>
+    <span><a href="../about/">About</a> · <a href="../privacy/">Privacy</a> · Shopfloor/Cost</span>
+  </footer>
+</div>
+<script src="../assets/calc.js"></script>
+</body>
+</html>

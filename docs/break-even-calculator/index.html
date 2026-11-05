@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Break-Even Calculator for Manufacturers – Units &amp; Margin of Safety</title>
+<meta name="description" content="Find the break-even volume, units needed for a target profit and the margin of safety for a product. Free contribution margin calculator.">
+<link rel="canonical" href="https://dodid-kk.github.io/shopfloor-cost/break-even-calculator/">
+<meta property="og:title" content="Break-Even Calculator for Manufacturers – Units &amp; Margin of Safety">
+<meta property="og:description" content="Find the break-even volume, units needed for a target profit and the margin of safety for a product. Free contribution margin calculator.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dodid-kk.github.io/shopfloor-cost/break-even-calculator/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23c2410c'/%3E%3Cpath d='M4 12V4h3a2 2 0 010 4H4m5 4l3-8' stroke='white' stroke-width='1.6' fill='none'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Break-Even Calculator for Manufacturers", "url": "https://dodid-kk.github.io/shopfloor-cost/break-even-calculator/", "applicationCategory": "BusinessApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is contribution margin?", "acceptedAnswer": {"@type": "Answer", "text": "Selling price minus variable cost per unit. As a percentage of price it is the contribution margin ratio."}}, {"@type": "Question", "name": "What is a good margin of safety?", "acceptedAnswer": {"@type": "Answer", "text": "Above 20% is comfortable for most products. Below 10% means small forecast errors turn profit into loss."}}, {"@type": "Question", "name": "Does break-even include depreciation?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, depreciation of equipment used for the product is a fixed cost. For a cash break-even, leave it out."}}, {"@type": "Question", "name": "Can I use this for a whole factory?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, if you use average price and average variable cost for the product mix. Results become less reliable when the mix changes a lot."}}]}</script>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="brand"><a href="../">Shopfloor<span>/</span>Cost</a></div>
+      <div class="tag">Free cost calculators for manufacturers, importers and small makers</div>
+    </div>
+    <label class="cur" for="cur">Currency
+      <select id="cur">
+        <option value="USD">USD $</option><option value="EUR">EUR €</option><option value="GBP">GBP £</option>
+        <option value="JPY">JPY ¥</option><option value="KRW">KRW ₩</option>
+      </select>
+    </label>
+  </header>
+  <nav class="site-nav" aria-label="Calculators"><a href="../landed-cost-calculator/">Landed cost</a><a href="../cost-per-good-unit-calculator/">Cost per good unit</a><a href="../scrap-cost-calculator/">Scrap &amp; rework</a><a href="../break-even-calculator/" aria-current="page">Break-even</a><a href="../equipment-payback-calculator/">Equipment payback</a></nav>
+  <section class="sheet" id="v-break-even">
+    <h1>Break-Even Calculator</h1>
+    <p class="lede">How many units you need to sell each month before the product starts making money.</p>
+    <div class="grid">
+      <div class="fields">
+        <div class="f"><label for="be-fixed">Fixed costs <span class="u">per month</span></label><input id="be-fixed" type="number" step="any" value="28000"></div>
+        <div class="f"><label for="be-price">Selling price <span class="u">per unit</span></label><input id="be-price" type="number" step="any" value="24"></div>
+        <div class="f"><label for="be-var">Variable cost <span class="u">per unit</span></label><input id="be-var" type="number" step="any" value="13.5"></div>
+        <div class="f"><label for="be-target">Target profit <span class="u">per month</span></label><input id="be-target" type="number" step="any" value="8000"></div>
+        <div class="f full"><label for="be-sales">Expected sales <span class="u">units / month</span></label><input id="be-sales" type="number" step="1" value="3500"></div>
+      </div>
+      <div class="result" aria-live="polite">
+        <div class="kicker">Break-even volume</div>
+        <div class="big" id="be-out">–</div>
+        <div class="sub" id="be-sub"></div>
+        <div class="bar" id="be-bar"></div>
+        <div class="legend" id="be-leg"></div>
+        <table class="bd" id="be-tbl"></table>
+        <div id="be-pill"></div>
+      </div>
+    </div>
+    <div class="ad" aria-hidden="true">Advertisement</div>
+    <div class="notes">
+      <div><h2>How it works</h2><code class="fx">Contribution  = price − variable cost
+Break-even    = fixed costs ÷ contribution
+Target volume = (fixed + target) ÷ contribution
+Safety margin = (expected − break-even) ÷ expected</code></div>
+      <div><h2>Fixed vs variable</h2><p>Fixed costs stay the same whatever you produce: rent, salaried staff, leases, depreciation. Variable costs rise with each unit: material, piece-rate labor, packaging, sales commission and shipping.</p></div>
+    </div>
+  </section>
+  <article class="guide"><h2>The break-even point</h2>
+<p>Every unit you sell earns its contribution: the selling price minus the costs that rise with each unit. Contribution first pays the fixed costs that you carry whatever happens, such as rent, salaried staff and equipment leases. The break-even point is the volume where total contribution exactly covers those fixed costs. Below it you lose money; above it each extra unit adds its full contribution to profit.</p><h2>Worked example</h2>
+<p>With fixed costs of $28,000 a month, a price of $24 and a variable cost of $13.50, each unit contributes $10.50.</p>
+<table><tr><th>Item</th><th>Value</th></tr>
+<tr><td>Break-even (28,000 ÷ 10.50)</td><td class="n">2,667 units</td></tr>
+<tr><td>Units for $8,000 profit</td><td class="n">3,429 units</td></tr>
+<tr><td>Profit at 3,500 expected sales</td><td class="n">$8,750</td></tr>
+<tr><td>Margin of safety</td><td class="n">23.8%</td></tr></table>
+<p>Sales could fall by almost a quarter before the product stops paying for itself.</p><h2>Fixed or variable?</h2>
+<p>Variable costs change with each unit: material, purchased parts, packaging, piece-rate labor, sales commission and outbound shipping. Fixed costs stay flat within a normal range of output: rent, salaried staff, insurance, leases and depreciation. Some costs are mixed. Electricity has a fixed base charge and a variable part, and overtime turns fixed labor into variable labor at high volume. Split mixed costs as well as you can; the result is only as good as that split.</p><h2>Using the result</h2>
+<ul>
+<li><b>Pricing:</b> raising the price by $1 here lifts contribution by almost 10% and cuts break-even by about 230 units.</li>
+<li><b>Make or buy:</b> buying a part instead of making it often turns fixed costs into variable ones, which lowers break-even but also lowers profit at high volume.</li>
+<li><b>Forecast risk:</b> a margin of safety under 20% means a normal bad month can push the product into a loss.</li>
+</ul><h2>Frequently asked questions</h2><h3>What is contribution margin?</h3><p>Selling price minus variable cost per unit. As a percentage of price it is the contribution margin ratio.</p><h3>What is a good margin of safety?</h3><p>Above 20% is comfortable for most products. Below 10% means small forecast errors turn profit into loss.</p><h3>Does break-even include depreciation?</h3><p>Yes, depreciation of equipment used for the product is a fixed cost. For a cash break-even, leave it out.</p><h3>Can I use this for a whole factory?</h3><p>Yes, if you use average price and average variable cost for the product mix. Results become less reliable when the mix changes a lot.</p><h2>More calculators</h2><div class="related"><a href="../landed-cost-calculator/"><b>Landed cost</b><span>True cost of an imported part after freight, insurance, duty and fees.</span></a><a href="../cost-per-good-unit-calculator/"><b>Cost per good unit</b><span>Unit cost after yield losses, with the scrap cost hidden in every good part.</span></a><a href="../scrap-cost-calculator/"><b>Scrap &amp; rework</b><span>Yearly money lost to scrap and rework, and the saving from a better rate.</span></a><a href="../equipment-payback-calculator/"><b>Equipment payback</b><span>Payback period, ROI and NPV for a new machine or automation cell.</span></a></div></article>
+  <footer>
+    <span>Estimates for planning only. Confirm duty rates and tax rules with your customs broker or accountant.</span>
+    <span><a href="../about/">About</a> · <a href="../privacy/">Privacy</a> · Shopfloor/Cost</span>
+  </footer>
+</div>
+<script src="../assets/calc.js"></script>
+</body>
+</html>
