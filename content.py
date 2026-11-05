@@ -156,14 +156,15 @@ PAGES = [
     {
         "slug": "equipment-payback-calculator",
         "section": "payback",
-        "title": "Equipment Payback, ROI & NPV Calculator for Machines | Shopfloor/Cost",
-        "description": "Check whether a new machine or automation cell pays for itself: simple payback, lifetime ROI and NPV with a cumulative cash flow chart. Free.",
+        "title": "Equipment Payback, ROI, NPV & IRR Calculator for Machines | Shopfloor/Cost",
+        "description": "Check whether a new machine or automation cell pays for itself: simple payback, lifetime ROI, NPV and IRR with a cumulative cash flow chart. Free.",
         "nav": "Equipment payback",
-        "blurb": "Payback period, ROI and NPV for a new machine or automation cell.",
+        "blurb": "Payback period, ROI, NPV and IRR for a new machine or automation cell.",
         "guide": [
             ("Three ways to judge an investment", """
 <p><b>Simple payback</b> answers how long until the savings have repaid the purchase price. It is easy to explain and favoured by plant managers, but it ignores what happens after the payback date.</p>
 <p><b>ROI over the useful life</b> compares total net savings with the investment. It shows whether the machine earns its cost several times over or only just covers it.</p>
+<p><b>IRR</b> is the discount rate at which NPV is exactly zero. Finance teams like it because it can be compared directly with the company's hurdle rate.</p>
 <p><b>NPV</b> discounts each year's saving back to today at your cost of capital. A positive NPV means the machine earns more than the money would earn elsewhere at that rate. It is the strictest of the three.</p>"""),
             ("Worked example", """
 <p>The defaults describe an automation cell costing $185,000 installed, saving $52,000 of labor and $14,000 of scrap a year, and adding $9,500 of power and maintenance, over a 7-year life at an 8% discount rate.</p>
@@ -172,7 +173,9 @@ PAGES = [
 <tr><td>Simple payback</td><td class="n">3.3 years</td></tr>
 <tr><td>Lifetime net saving</td><td class="n">$395,500</td></tr>
 <tr><td>ROI over 7 years</td><td class="n">114%</td></tr>
-<tr><td>NPV at 8%</td><td class="n">about $109,000</td></tr></table>"""),
+<tr><td>NPV at 8%</td><td class="n">about $109,000</td></tr>
+<tr><td>IRR</td><td class="n">23.6%</td></tr></table>
+<p>An IRR of 23.6% means the machine returns the same as an investment earning 23.6% a year, well above an 8% cost of capital.</p>"""),
             ("What to include", """
 <ul>
 <li><b>Investment:</b> purchase price, freight, installation, utilities hook-up, guarding, tooling, programming and training.</li>

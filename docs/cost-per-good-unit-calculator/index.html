@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="../assets/style.css">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Cost per Good Unit Calculator (Yield & Scrap)", "url": "https://dodid-kk.github.io/shopfloor-cost/cost-per-good-unit-calculator/", "applicationCategory": "BusinessApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is first-pass yield?", "acceptedAnswer": {"@type": "Answer", "text": "The share of units that pass every inspection the first time, without rework. It is the honest measure of a process because rework hides losses."}}, {"@type": "Question", "name": "How do I calculate yield for a multi-step process?", "acceptedAnswer": {"@type": "Answer", "text": "Multiply the yield of each step. This is called rolled throughput yield. Enter the result as the first-pass yield."}}, {"@type": "Question", "name": "Should overhead be included?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, if the rejected unit consumed machine time. Overhead that does not change with output, such as rent, is already spread over good units by your costing system."}}, {"@type": "Question", "name": "What counts as salvage value?", "acceptedAnswer": {"@type": "Answer", "text": "Anything you recover from a rejected unit: scrap metal sold by weight, reusable components, or a rebate from the material supplier."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Calculators", "item": "https://dodid-kk.github.io/shopfloor-cost/"}, {"@type": "ListItem", "position": 2, "name": "Costing", "item": "https://dodid-kk.github.io/shopfloor-cost/#c-costing"}, {"@type": "ListItem", "position": 3, "name": "Cost per good unit", "item": "https://dodid-kk.github.io/shopfloor-cost/cost-per-good-unit-calculator/"}]}</script>
 </head>
 <body>
 <div class="wrap">
@@ -31,17 +32,18 @@
       </select>
     </label>
   </header>
-  <nav class="site-nav" aria-label="Calculators"><a href="../landed-cost-calculator/">Landed cost</a><a href="../cost-per-good-unit-calculator/" aria-current="page">Cost per good unit</a><a href="../scrap-cost-calculator/">Scrap &amp; rework</a><a href="../break-even-calculator/">Break-even</a><a href="../equipment-payback-calculator/">Equipment payback</a></nav>
+  <nav class="site-nav" aria-label="Calculators"><a href="../landed-cost-calculator/">Landed cost</a><a href="../cost-per-good-unit-calculator/" aria-current="page">Cost per good unit</a><a href="../scrap-cost-calculator/">Scrap &amp; rework</a><a href="../machine-hour-rate-calculator/">Machine hour rate</a><a href="../oee-calculator/">OEE</a><a href="../takt-time-calculator/">Takt time</a><a href="../break-even-calculator/">Break-even</a><a href="../equipment-payback-calculator/">Equipment payback</a><a href="../margin-markup-calculator/">Margin &amp; markup</a></nav>
+  <p class="crumbs"><a href="../">Calculators</a> › <a href="../#c-costing">Costing</a> › Cost per good unit</p>
   <section class="sheet" id="v-cost-per-good-unit">
     <h1>Cost per Good Unit Calculator</h1>
     <p class="lede">Every rejected part still used material, labor and machine time. This spreads that cost over the parts you can actually ship.</p>
     <div class="grid">
       <div class="fields">
-        <div class="f"><label for="cg-mat">Material cost <span class="u">per unit started</span></label><input id="cg-mat" type="number" step="any" value="2.80"></div>
-        <div class="f"><label for="cg-conv">Labor + overhead <span class="u">per unit started</span></label><input id="cg-conv" type="number" step="any" value="1.65"></div>
+        <div class="f"><label for="cg-mat">Material cost <span class="u">per unit started</span></label><input id="cg-mat" type="number" step="any" inputmode="decimal" value="2.80"></div>
+        <div class="f"><label for="cg-conv">Labor + overhead <span class="u">per unit started</span></label><input id="cg-conv" type="number" step="any" inputmode="decimal" value="1.65"></div>
         <div class="f"><label for="cg-start">Units started <span class="u">per batch</span></label><input id="cg-start" type="number" step="1" value="12000"></div>
-        <div class="f"><label for="cg-yield">First-pass yield <span class="u">%</span></label><input id="cg-yield" type="number" step="any" value="91.5"></div>
-        <div class="f full"><label for="cg-salv">Scrap salvage value <span class="u">per rejected unit</span></label><input id="cg-salv" type="number" step="any" value="0.15"></div>
+        <div class="f"><label for="cg-yield">First-pass yield <span class="u">%</span></label><input id="cg-yield" type="number" step="any" inputmode="decimal" value="91.5"></div>
+        <div class="f full"><label for="cg-salv">Scrap salvage value <span class="u">per rejected unit</span></label><input id="cg-salv" type="number" step="any" inputmode="decimal" value="0.15"></div>
       </div>
       <div class="result" aria-live="polite">
         <div class="kicker">Cost per good unit</div>
@@ -52,7 +54,7 @@
         <table class="bd" id="cg-tbl"></table>
       </div>
     </div>
-    <div class="ad" aria-hidden="true">Advertisement</div>
+    
     <div class="notes">
       <div><h2>How it works</h2><code class="fx">Good units   = units started × yield
 Total cost   = started × (material + conversion)
@@ -60,8 +62,8 @@ Total cost   = started × (material + conversion)
 Cost / good  = total cost ÷ good units</code></div>
       <div><h2>Why yield matters</h2><p>At 90% yield, each good part carries the cost of about 1.11 parts. Raising yield from 90% to 95% cuts that to 1.05, which lowers unit cost by about 5% without touching material prices.</p></div>
     </div>
-  </section>
-  <article class="guide"><h2>Why the standard cost is too low</h2>
+  <div class="print-url">https://dodid-kk.github.io/shopfloor-cost/cost-per-good-unit-calculator/</div></section>
+  <article class="guide"><p class="reviewed">Reviewed November 2026. Formulas are shown above the guide. <a href="../contact/">Report an error or request a calculator</a>.</p><h2>Why the standard cost is too low</h2>
 <p>A standard cost sheet usually adds material, labor and overhead for one unit and stops there. But no line runs at 100% yield. Every part that fails inspection used the same material, machine time and labor as a good one, and that cost has to be recovered from the parts you actually ship.</p>
 <p>The cost per good unit puts that hidden cost back where it belongs. It is the figure to use when you quote prices, compare suppliers or decide whether a yield project is worth funding.</p><h2>Worked example</h2>
 <p>With the default values, a batch of 12,000 units costs $2.80 of material and $1.65 of labor and overhead per unit started, and first-pass yield is 91.5%.</p>
@@ -80,10 +82,10 @@ Cost / good  = total cost ÷ good units</code></div>
 <li><b>Using final yield instead of first-pass yield.</b> If rejects are reworked and later pass, use the rework calculator for that cost and keep only true scrap here.</li>
 <li><b>Applying yield to purchased parts that are not consumed.</b> If a rejected assembly can be stripped and its components reused, enter their value as salvage.</li>
 <li><b>Multi-step lines.</b> Rolled throughput yield is the product of each step's yield. Three steps at 97% give 91.3%, not 97%.</li>
-</ul><h2>Frequently asked questions</h2><h3>What is first-pass yield?</h3><p>The share of units that pass every inspection the first time, without rework. It is the honest measure of a process because rework hides losses.</p><h3>How do I calculate yield for a multi-step process?</h3><p>Multiply the yield of each step. This is called rolled throughput yield. Enter the result as the first-pass yield.</p><h3>Should overhead be included?</h3><p>Yes, if the rejected unit consumed machine time. Overhead that does not change with output, such as rent, is already spread over good units by your costing system.</p><h3>What counts as salvage value?</h3><p>Anything you recover from a rejected unit: scrap metal sold by weight, reusable components, or a rebate from the material supplier.</p><h2>More calculators</h2><div class="related"><a href="../landed-cost-calculator/"><b>Landed cost</b><span>True cost of an imported part after freight, insurance, duty and fees.</span></a><a href="../scrap-cost-calculator/"><b>Scrap &amp; rework</b><span>Yearly money lost to scrap and rework, and the saving from a better rate.</span></a><a href="../break-even-calculator/"><b>Break-even</b><span>Units per month before a product makes money, and how safe your forecast is.</span></a><a href="../equipment-payback-calculator/"><b>Equipment payback</b><span>Payback period, ROI and NPV for a new machine or automation cell.</span></a></div></article>
+</ul><h2>Frequently asked questions</h2><h3>What is first-pass yield?</h3><p>The share of units that pass every inspection the first time, without rework. It is the honest measure of a process because rework hides losses.</p><h3>How do I calculate yield for a multi-step process?</h3><p>Multiply the yield of each step. This is called rolled throughput yield. Enter the result as the first-pass yield.</p><h3>Should overhead be included?</h3><p>Yes, if the rejected unit consumed machine time. Overhead that does not change with output, such as rent, is already spread over good units by your costing system.</p><h3>What counts as salvage value?</h3><p>Anything you recover from a rejected unit: scrap metal sold by weight, reusable components, or a rebate from the material supplier.</p><h2>More calculators</h2><div class="related"><a href="../landed-cost-calculator/"><b>Landed cost</b><span>True cost of an imported part after freight, insurance, duty and fees.</span></a><a href="../scrap-cost-calculator/"><b>Scrap &amp; rework</b><span>Yearly money lost to scrap and rework, and the saving from a better rate.</span></a><a href="../machine-hour-rate-calculator/"><b>Machine hour rate</b><span>Hourly cost of a machine for quoting, with or without the operator.</span></a><a href="../oee-calculator/"><b>OEE</b><span>Availability, performance and quality from one shift, with the minutes lost to each.</span></a><a href="../takt-time-calculator/"><b>Takt time</b><span>Pace needed to meet demand, stations required and a bottleneck check.</span></a><a href="../break-even-calculator/"><b>Break-even</b><span>Units per month before a product makes money, and how safe your forecast is.</span></a><a href="../equipment-payback-calculator/"><b>Equipment payback</b><span>Payback period, ROI, NPV and IRR for a new machine or automation cell.</span></a><a href="../margin-markup-calculator/"><b>Margin &amp; markup</b><span>Selling price for a target margin after fees, and the markup it implies.</span></a></div></article>
   <footer>
     <span>Estimates for planning only. Confirm duty rates and tax rules with your customs broker or accountant.</span>
-    <span><a href="../about/">About</a> · <a href="../privacy/">Privacy</a> · Shopfloor/Cost</span>
+    <span><a href="../about/">About</a> · <a href="../contact/">Contact</a> · <a href="../privacy/">Privacy</a> · Shopfloor/Cost</span>
   </footer>
 </div>
 <script src="../assets/calc.js"></script>

@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="../assets/style.css">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Landed Cost Calculator (CIF & FOB Duty)", "url": "https://dodid-kk.github.io/shopfloor-cost/landed-cost-calculator/", "applicationCategory": "BusinessApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Does landed cost include VAT?", "acceptedAnswer": {"@type": "Answer", "text": "Usually not. Registered businesses can reclaim import VAT or GST, so it is a cash-flow item rather than a cost. If your business cannot reclaim it, add it to the handling field."}}, {"@type": "Question", "name": "Where do I find the duty rate?", "acceptedAnswer": {"@type": "Answer", "text": "Look up your product's HS code in the destination country's tariff schedule, for example the US HTS, the EU TARIC database or your national customs portal. Your customs broker can confirm it."}}, {"@type": "Question", "name": "What is the difference between FOB and CIF?", "acceptedAnswer": {"@type": "Answer", "text": "FOB is the value of the goods loaded on the ship at the origin port. CIF adds the cost of insurance and freight to the destination. Most countries charge duty on CIF; the US and Canada use FOB."}}, {"@type": "Question", "name": "Should freight be split by quantity or by weight?", "acceptedAnswer": {"@type": "Answer", "text": "For a single product, by quantity is fine. For mixed shipments, split freight by weight or volume so heavy parts carry their real share."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Calculators", "item": "https://dodid-kk.github.io/shopfloor-cost/"}, {"@type": "ListItem", "position": 2, "name": "Costing", "item": "https://dodid-kk.github.io/shopfloor-cost/#c-costing"}, {"@type": "ListItem", "position": 3, "name": "Landed cost", "item": "https://dodid-kk.github.io/shopfloor-cost/landed-cost-calculator/"}]}</script>
 </head>
 <body>
 <div class="wrap">
@@ -31,19 +32,20 @@
       </select>
     </label>
   </header>
-  <nav class="site-nav" aria-label="Calculators"><a href="../landed-cost-calculator/" aria-current="page">Landed cost</a><a href="../cost-per-good-unit-calculator/">Cost per good unit</a><a href="../scrap-cost-calculator/">Scrap &amp; rework</a><a href="../break-even-calculator/">Break-even</a><a href="../equipment-payback-calculator/">Equipment payback</a></nav>
+  <nav class="site-nav" aria-label="Calculators"><a href="../landed-cost-calculator/" aria-current="page">Landed cost</a><a href="../cost-per-good-unit-calculator/">Cost per good unit</a><a href="../scrap-cost-calculator/">Scrap &amp; rework</a><a href="../machine-hour-rate-calculator/">Machine hour rate</a><a href="../oee-calculator/">OEE</a><a href="../takt-time-calculator/">Takt time</a><a href="../break-even-calculator/">Break-even</a><a href="../equipment-payback-calculator/">Equipment payback</a><a href="../margin-markup-calculator/">Margin &amp; markup</a></nav>
+  <p class="crumbs"><a href="../">Calculators</a> › <a href="../#c-costing">Costing</a> › Landed cost</p>
   <section class="sheet" id="v-landed-cost">
     <h1>Landed Cost Calculator</h1>
     <p class="lede">Find the true cost of an imported part once freight, insurance, duty and customs fees are added. Example values are filled in; replace them with your shipment.</p>
     <div class="grid">
       <div class="fields">
-        <div class="f"><label for="lc-price">Unit price (FOB) <span class="u">per unit</span></label><input id="lc-price" type="number" step="any" value="4.20"></div>
+        <div class="f"><label for="lc-price">Unit price (FOB) <span class="u">per unit</span></label><input id="lc-price" type="number" step="any" inputmode="decimal" value="4.20"></div>
         <div class="f"><label for="lc-qty">Quantity <span class="u">units</span></label><input id="lc-qty" type="number" step="1" value="5000"></div>
-        <div class="f"><label for="lc-freight">Freight <span class="u">shipment total</span></label><input id="lc-freight" type="number" step="any" value="1850"></div>
-        <div class="f"><label for="lc-ins">Insurance <span class="u">% of goods</span></label><input id="lc-ins" type="number" step="any" value="0.5"></div>
-        <div class="f"><label for="lc-duty">Duty rate <span class="u">%</span></label><input id="lc-duty" type="number" step="any" value="6.5"></div>
-        <div class="f"><label for="lc-fees">Customs &amp; broker fees <span class="u">total</span></label><input id="lc-fees" type="number" step="any" value="320"></div>
-        <div class="f"><label for="lc-other">Port, handling, inland <span class="u">total</span></label><input id="lc-other" type="number" step="any" value="410"></div>
+        <div class="f"><label for="lc-freight">Freight <span class="u">shipment total</span></label><input id="lc-freight" type="number" step="any" inputmode="decimal" value="1850"></div>
+        <div class="f"><label for="lc-ins">Insurance <span class="u">% of goods</span></label><input id="lc-ins" type="number" step="any" inputmode="decimal" value="0.5"></div>
+        <div class="f"><label for="lc-duty">Duty rate <span class="u">%</span></label><input id="lc-duty" type="number" step="any" inputmode="decimal" value="6.5"></div>
+        <div class="f"><label for="lc-fees">Customs &amp; broker fees <span class="u">total</span></label><input id="lc-fees" type="number" step="any" inputmode="decimal" value="320"></div>
+        <div class="f"><label for="lc-other">Port, handling, inland <span class="u">total</span></label><input id="lc-other" type="number" step="any" inputmode="decimal" value="410"></div>
         <div class="f"><label>Duty charged on</label>
           <div class="seg" id="lc-basis"><button type="button" data-b="cif" aria-pressed="true">CIF value</button><button type="button" data-b="fob" aria-pressed="false">FOB value</button></div>
         </div>
@@ -57,7 +59,7 @@
         <table class="bd" id="lc-tbl"></table>
       </div>
     </div>
-    <div class="ad" aria-hidden="true">Advertisement</div>
+    
     <div class="notes">
       <div><h2>How it works</h2><p>Landed cost is everything you pay to get goods onto your shop floor. The purchase price is only the start.</p>
       <code class="fx">Customs value = goods + freight + insurance  (CIF)
@@ -66,8 +68,8 @@ Landed cost  = goods + freight + insurance
              + duty + fees + handling</code></div>
       <div><h2>CIF or FOB?</h2><p>The EU, UK, Korea, China and most other countries charge duty on the CIF value, which includes freight and insurance. The US and Canada charge duty on the FOB value, so freight is left out of the duty base.</p><p>Duty rates come from the HS code of your product. Check your country's tariff schedule before you quote a price.</p></div>
     </div>
-  </section>
-  <article class="guide"><h2>What landed cost means</h2>
+  <div class="print-url">https://dodid-kk.github.io/shopfloor-cost/landed-cost-calculator/</div></section>
+  <article class="guide"><p class="reviewed">Reviewed November 2026. Formulas are shown above the guide. <a href="../contact/">Report an error or request a calculator</a>.</p><h2>What landed cost means</h2>
 <p>Landed cost is the total amount you pay to get one unit of a product from the supplier's factory onto your own shop floor. The supplier's invoice price is only the first line. Freight, cargo insurance, import duty, customs brokerage, port charges and the truck from the port all add to it, and for low-value or bulky parts they can add 20–40% on top of the purchase price.</p>
 <p>If you quote your own selling price from the supplier price alone, every one of those costs comes straight out of your margin. Landed cost is the number that belongs in your bill of materials and your pricing sheet.</p><h2>Worked example</h2>
 <p>The default values above describe a typical small shipment: 5,000 parts at $4.20 each on FOB terms, sea freight of $1,850, insurance at 0.5% of the goods value, a 6.5% duty rate, $320 of broker and customs fees and $410 of port and inland handling.</p>
@@ -87,10 +89,10 @@ Landed cost  = goods + freight + insurance
 <li><b>Forgetting fixed fees on small shipments.</b> A $300 broker fee is 1% of a $30,000 container but 15% of a $2,000 air parcel.</li>
 <li><b>Ignoring VAT or GST.</b> Import VAT is usually recoverable for registered businesses, so this calculator leaves it out. If you cannot reclaim it, add it to the other costs.</li>
 <li><b>Spreading freight by unit count only.</b> If one shipment mixes large and small parts, allocate freight by weight or volume instead.</li>
-</ul><h2>Frequently asked questions</h2><h3>Does landed cost include VAT?</h3><p>Usually not. Registered businesses can reclaim import VAT or GST, so it is a cash-flow item rather than a cost. If your business cannot reclaim it, add it to the handling field.</p><h3>Where do I find the duty rate?</h3><p>Look up your product&#x27;s HS code in the destination country&#x27;s tariff schedule, for example the US HTS, the EU TARIC database or your national customs portal. Your customs broker can confirm it.</p><h3>What is the difference between FOB and CIF?</h3><p>FOB is the value of the goods loaded on the ship at the origin port. CIF adds the cost of insurance and freight to the destination. Most countries charge duty on CIF; the US and Canada use FOB.</p><h3>Should freight be split by quantity or by weight?</h3><p>For a single product, by quantity is fine. For mixed shipments, split freight by weight or volume so heavy parts carry their real share.</p><h2>More calculators</h2><div class="related"><a href="../cost-per-good-unit-calculator/"><b>Cost per good unit</b><span>Unit cost after yield losses, with the scrap cost hidden in every good part.</span></a><a href="../scrap-cost-calculator/"><b>Scrap &amp; rework</b><span>Yearly money lost to scrap and rework, and the saving from a better rate.</span></a><a href="../break-even-calculator/"><b>Break-even</b><span>Units per month before a product makes money, and how safe your forecast is.</span></a><a href="../equipment-payback-calculator/"><b>Equipment payback</b><span>Payback period, ROI and NPV for a new machine or automation cell.</span></a></div></article>
+</ul><h2>Frequently asked questions</h2><h3>Does landed cost include VAT?</h3><p>Usually not. Registered businesses can reclaim import VAT or GST, so it is a cash-flow item rather than a cost. If your business cannot reclaim it, add it to the handling field.</p><h3>Where do I find the duty rate?</h3><p>Look up your product&#x27;s HS code in the destination country&#x27;s tariff schedule, for example the US HTS, the EU TARIC database or your national customs portal. Your customs broker can confirm it.</p><h3>What is the difference between FOB and CIF?</h3><p>FOB is the value of the goods loaded on the ship at the origin port. CIF adds the cost of insurance and freight to the destination. Most countries charge duty on CIF; the US and Canada use FOB.</p><h3>Should freight be split by quantity or by weight?</h3><p>For a single product, by quantity is fine. For mixed shipments, split freight by weight or volume so heavy parts carry their real share.</p><h2>More calculators</h2><div class="related"><a href="../cost-per-good-unit-calculator/"><b>Cost per good unit</b><span>Unit cost after yield losses, with the scrap cost hidden in every good part.</span></a><a href="../scrap-cost-calculator/"><b>Scrap &amp; rework</b><span>Yearly money lost to scrap and rework, and the saving from a better rate.</span></a><a href="../machine-hour-rate-calculator/"><b>Machine hour rate</b><span>Hourly cost of a machine for quoting, with or without the operator.</span></a><a href="../oee-calculator/"><b>OEE</b><span>Availability, performance and quality from one shift, with the minutes lost to each.</span></a><a href="../takt-time-calculator/"><b>Takt time</b><span>Pace needed to meet demand, stations required and a bottleneck check.</span></a><a href="../break-even-calculator/"><b>Break-even</b><span>Units per month before a product makes money, and how safe your forecast is.</span></a><a href="../equipment-payback-calculator/"><b>Equipment payback</b><span>Payback period, ROI, NPV and IRR for a new machine or automation cell.</span></a><a href="../margin-markup-calculator/"><b>Margin &amp; markup</b><span>Selling price for a target margin after fees, and the markup it implies.</span></a></div></article>
   <footer>
     <span>Estimates for planning only. Confirm duty rates and tax rules with your customs broker or accountant.</span>
-    <span><a href="../about/">About</a> · <a href="../privacy/">Privacy</a> · Shopfloor/Cost</span>
+    <span><a href="../about/">About</a> · <a href="../contact/">Contact</a> · <a href="../privacy/">Privacy</a> · Shopfloor/Cost</span>
   </footer>
 </div>
 <script src="../assets/calc.js"></script>

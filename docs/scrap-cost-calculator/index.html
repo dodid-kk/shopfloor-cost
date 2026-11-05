@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="../assets/style.css">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Scrap & Rework Cost Calculator", "url": "https://dodid-kk.github.io/shopfloor-cost/scrap-cost-calculator/", "applicationCategory": "BusinessApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is the cost of poor quality?", "acceptedAnswer": {"@type": "Answer", "text": "All costs that would disappear if every part were made right the first time: scrap, rework, extra inspection, warranty and returns. This calculator covers scrap and rework."}}, {"@type": "Question", "name": "Is a 3% scrap rate high?", "acceptedAnswer": {"@type": "Answer", "text": "It depends on the process. Machining lines often run below 1%, while new products and complex assemblies can exceed 5%. Compare with your own trend rather than an industry average."}}, {"@type": "Question", "name": "Should I include material I can sell as scrap?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, enter it as salvage value per scrapped unit. It reduces the loss."}}, {"@type": "Question", "name": "How do I justify a quality project?", "acceptedAnswer": {"@type": "Answer", "text": "Use the yearly saving at target as the benefit, then compare it with the project cost in the equipment payback calculator."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Calculators", "item": "https://dodid-kk.github.io/shopfloor-cost/"}, {"@type": "ListItem", "position": 2, "name": "Costing", "item": "https://dodid-kk.github.io/shopfloor-cost/#c-costing"}, {"@type": "ListItem", "position": 3, "name": "Scrap & rework", "item": "https://dodid-kk.github.io/shopfloor-cost/scrap-cost-calculator/"}]}</script>
 </head>
 <body>
 <div class="wrap">
@@ -31,19 +32,20 @@
       </select>
     </label>
   </header>
-  <nav class="site-nav" aria-label="Calculators"><a href="../landed-cost-calculator/">Landed cost</a><a href="../cost-per-good-unit-calculator/">Cost per good unit</a><a href="../scrap-cost-calculator/" aria-current="page">Scrap &amp; rework</a><a href="../break-even-calculator/">Break-even</a><a href="../equipment-payback-calculator/">Equipment payback</a></nav>
+  <nav class="site-nav" aria-label="Calculators"><a href="../landed-cost-calculator/">Landed cost</a><a href="../cost-per-good-unit-calculator/">Cost per good unit</a><a href="../scrap-cost-calculator/" aria-current="page">Scrap &amp; rework</a><a href="../machine-hour-rate-calculator/">Machine hour rate</a><a href="../oee-calculator/">OEE</a><a href="../takt-time-calculator/">Takt time</a><a href="../break-even-calculator/">Break-even</a><a href="../equipment-payback-calculator/">Equipment payback</a><a href="../margin-markup-calculator/">Margin &amp; markup</a></nav>
+  <p class="crumbs"><a href="../">Calculators</a> › <a href="../#c-costing">Costing</a> › Scrap &amp; rework</p>
   <section class="sheet" id="v-scrap-cost">
     <h1>Scrap &amp; Rework Cost Calculator</h1>
     <p class="lede">Put a yearly number on quality losses so an improvement project can be justified in money, not percentages.</p>
     <div class="grid">
       <div class="fields">
         <div class="f"><label for="sc-vol">Production volume <span class="u">units / month</span></label><input id="sc-vol" type="number" step="1" value="40000"></div>
-        <div class="f"><label for="sc-cost">Full cost per unit <span class="u">at scrap point</span></label><input id="sc-cost" type="number" step="any" value="6.40"></div>
-        <div class="f"><label for="sc-scrap">Scrap rate <span class="u">%</span></label><input id="sc-scrap" type="number" step="any" value="3.2"></div>
-        <div class="f"><label for="sc-salv">Salvage value <span class="u">per scrapped unit</span></label><input id="sc-salv" type="number" step="any" value="0.40"></div>
-        <div class="f"><label for="sc-rw">Rework rate <span class="u">%</span></label><input id="sc-rw" type="number" step="any" value="4.5"></div>
-        <div class="f"><label for="sc-rwc">Rework cost <span class="u">per reworked unit</span></label><input id="sc-rwc" type="number" step="any" value="1.90"></div>
-        <div class="f full"><label for="sc-target">Target scrap rate after improvement <span class="u">%</span></label><input id="sc-target" type="number" step="any" value="1.5"></div>
+        <div class="f"><label for="sc-cost">Full cost per unit <span class="u">at scrap point</span></label><input id="sc-cost" type="number" step="any" inputmode="decimal" value="6.40"></div>
+        <div class="f"><label for="sc-scrap">Scrap rate <span class="u">%</span></label><input id="sc-scrap" type="number" step="any" inputmode="decimal" value="3.2"></div>
+        <div class="f"><label for="sc-salv">Salvage value <span class="u">per scrapped unit</span></label><input id="sc-salv" type="number" step="any" inputmode="decimal" value="0.40"></div>
+        <div class="f"><label for="sc-rw">Rework rate <span class="u">%</span></label><input id="sc-rw" type="number" step="any" inputmode="decimal" value="4.5"></div>
+        <div class="f"><label for="sc-rwc">Rework cost <span class="u">per reworked unit</span></label><input id="sc-rwc" type="number" step="any" inputmode="decimal" value="1.90"></div>
+        <div class="f full"><label for="sc-target">Target scrap rate after improvement <span class="u">%</span></label><input id="sc-target" type="number" step="any" inputmode="decimal" value="1.5"></div>
       </div>
       <div class="result" aria-live="polite">
         <div class="kicker">Quality loss per year</div>
@@ -55,15 +57,15 @@
         <div id="sc-pill"></div>
       </div>
     </div>
-    <div class="ad" aria-hidden="true">Advertisement</div>
+    
     <div class="notes">
       <div><h2>How it works</h2><code class="fx">Scrap loss  = volume × scrap % × (cost − salvage)
 Rework loss = volume × rework % × rework cost
 Yearly loss = (scrap + rework) × 12</code></div>
       <div><h2>Which unit cost to use</h2><p>Use the full cost the part has absorbed at the step where it is scrapped. A part rejected at final inspection carries every operation before it, so it costs more than one rejected at incoming inspection.</p></div>
     </div>
-  </section>
-  <article class="guide"><h2>Put quality losses in money</h2>
+  <div class="print-url">https://dodid-kk.github.io/shopfloor-cost/scrap-cost-calculator/</div></section>
+  <article class="guide"><p class="reviewed">Reviewed November 2026. Formulas are shown above the guide. <a href="../contact/">Report an error or request a calculator</a>.</p><h2>Put quality losses in money</h2>
 <p>A scrap rate of 3% sounds small in a production meeting. A loss of $90,000 a year does not. This calculator turns scrap and rework percentages into a yearly cost so that an improvement project can be compared with any other investment.</p>
 <p>It covers the two most visible parts of the cost of poor quality: parts thrown away and parts fixed by hand. Inspection labor, warranty claims and lost customers come on top.</p><h2>Worked example</h2>
 <p>The defaults describe a line making 40,000 units a month at a full cost of $6.40 each, with 3.2% scrap, $0.40 salvage per scrapped part, 4.5% rework and $1.90 of labor per reworked part.</p>
@@ -78,10 +80,10 @@ Yearly loss = (scrap + rework) × 12</code></div>
 <li><b>Counting rework as free because the part is eventually shipped.</b> Rework uses labor, machine time and floor space, and it delays orders.</li>
 <li><b>Using material cost only.</b> That understates the loss, often by half.</li>
 <li><b>Setting a target that ignores the cause.</b> A target is useful only with a plan; use the saving to size what you can spend on fixtures, training or inspection.</li>
-</ul><h2>Frequently asked questions</h2><h3>What is the cost of poor quality?</h3><p>All costs that would disappear if every part were made right the first time: scrap, rework, extra inspection, warranty and returns. This calculator covers scrap and rework.</p><h3>Is a 3% scrap rate high?</h3><p>It depends on the process. Machining lines often run below 1%, while new products and complex assemblies can exceed 5%. Compare with your own trend rather than an industry average.</p><h3>Should I include material I can sell as scrap?</h3><p>Yes, enter it as salvage value per scrapped unit. It reduces the loss.</p><h3>How do I justify a quality project?</h3><p>Use the yearly saving at target as the benefit, then compare it with the project cost in the equipment payback calculator.</p><h2>More calculators</h2><div class="related"><a href="../landed-cost-calculator/"><b>Landed cost</b><span>True cost of an imported part after freight, insurance, duty and fees.</span></a><a href="../cost-per-good-unit-calculator/"><b>Cost per good unit</b><span>Unit cost after yield losses, with the scrap cost hidden in every good part.</span></a><a href="../break-even-calculator/"><b>Break-even</b><span>Units per month before a product makes money, and how safe your forecast is.</span></a><a href="../equipment-payback-calculator/"><b>Equipment payback</b><span>Payback period, ROI and NPV for a new machine or automation cell.</span></a></div></article>
+</ul><h2>Frequently asked questions</h2><h3>What is the cost of poor quality?</h3><p>All costs that would disappear if every part were made right the first time: scrap, rework, extra inspection, warranty and returns. This calculator covers scrap and rework.</p><h3>Is a 3% scrap rate high?</h3><p>It depends on the process. Machining lines often run below 1%, while new products and complex assemblies can exceed 5%. Compare with your own trend rather than an industry average.</p><h3>Should I include material I can sell as scrap?</h3><p>Yes, enter it as salvage value per scrapped unit. It reduces the loss.</p><h3>How do I justify a quality project?</h3><p>Use the yearly saving at target as the benefit, then compare it with the project cost in the equipment payback calculator.</p><h2>More calculators</h2><div class="related"><a href="../landed-cost-calculator/"><b>Landed cost</b><span>True cost of an imported part after freight, insurance, duty and fees.</span></a><a href="../cost-per-good-unit-calculator/"><b>Cost per good unit</b><span>Unit cost after yield losses, with the scrap cost hidden in every good part.</span></a><a href="../machine-hour-rate-calculator/"><b>Machine hour rate</b><span>Hourly cost of a machine for quoting, with or without the operator.</span></a><a href="../oee-calculator/"><b>OEE</b><span>Availability, performance and quality from one shift, with the minutes lost to each.</span></a><a href="../takt-time-calculator/"><b>Takt time</b><span>Pace needed to meet demand, stations required and a bottleneck check.</span></a><a href="../break-even-calculator/"><b>Break-even</b><span>Units per month before a product makes money, and how safe your forecast is.</span></a><a href="../equipment-payback-calculator/"><b>Equipment payback</b><span>Payback period, ROI, NPV and IRR for a new machine or automation cell.</span></a><a href="../margin-markup-calculator/"><b>Margin &amp; markup</b><span>Selling price for a target margin after fees, and the markup it implies.</span></a></div></article>
   <footer>
     <span>Estimates for planning only. Confirm duty rates and tax rules with your customs broker or accountant.</span>
-    <span><a href="../about/">About</a> · <a href="../privacy/">Privacy</a> · Shopfloor/Cost</span>
+    <span><a href="../about/">About</a> · <a href="../contact/">Contact</a> · <a href="../privacy/">Privacy</a> · Shopfloor/Cost</span>
   </footer>
 </div>
 <script src="../assets/calc.js"></script>

@@ -70,7 +70,8 @@
     var out=document.getElementById("pb-out");
     out.textContent=isFinite(pb)?pb.toFixed(1)+" years":"No payback";
     document.getElementById("pb-sub").textContent=money(net,0)+" net saving per year over "+life+" years";
-    rows("pb-tbl",[["Net saving / year",money(net,0)],["Lifetime net saving",money(net*life,0)],["ROI over life",pct(roi,0)],["NPV at "+pct(r*100,1),money(npv,0),1]]);
+    var irr=NaN;if(net>0&&net*life>inv){var lo=-0.99,hi=10;for(var it=0;it<200;it++){var md=(lo+hi)/2,v=-inv;for(var t=1;t<=life;t++)v+=net/Math.pow(1+md,t);if(v>0)lo=md;else hi=md;}irr=(lo+hi)/2*100;}
+    rows("pb-tbl",[["Net saving / year",money(net,0)],["IRR",pct(irr,1)],["Lifetime net saving",money(net*life,0)],["ROI over life",pct(roi,0)],["NPV at "+pct(r*100,1),money(npv,0),1]]);
     if(!isFinite(pb)||pb>life)pill("pb-pill","no","Does not pay back within its life");else if(npv<0)pill("pb-pill","warn","Pays back, but NPV is negative");else if(pb<=3)pill("pb-pill","ok","Strong case: payback under 3 years");else pill("pb-pill","warn","Pays back in "+pb.toFixed(1)+" years");
     // chart: cumulative cash
     var pts=[-inv];for(var k=1;k<=life;k++)pts.push(-inv+net*k);
@@ -82,9 +83,91 @@
       s+='<text x="'+x(i)+'" y="'+(H-6)+'" font-size="9" text-anchor="'+(i===0?"start":i===life?"end":"middle")+'" fill="var(--muted)" font-family="var(--mono)">'+(i===0?"Y0":"Y"+i)+'</text>';});
     document.getElementById("pb-svg").innerHTML=s;
   }
-  var fns={"landed-cost":landed,"cost-per-good-unit":goodUnit,"scrap-cost":scrap,"break-even":breakEven,"payback":payback};
+
+  function machineRate(){
+    var price=g("mh-price"),res=g("mh-resid"),life=Math.max(g("mh-life"),1),r=g("mh-int")/100;
+    var hrs=g("mh-hrs")*g("mh-shifts")*g("mh-days")*g("mh-util")/100;
+    var dep=(price-res)/life,intr=(price+res)/2*r,space=g("mh-area")*g("mh-rent"),mt=g("mh-maint");
+    var fixed=(dep+intr+space+mt)/(hrs||NaN),energy=g("mh-kw")*g("mh-load")/100*g("mh-elec"),rate=fixed+energy,withOp=rate+g("mh-wage");
+    document.getElementById("mh-out").textContent=money(rate)+" / h";
+    document.getElementById("mh-sub").textContent=money(withOp)+" / h with operator · "+num(hrs)+" running hours a year";
+    bar("mh-bar","mh-leg",[["Depreciation",dep/hrs,C2],["Interest",intr/hrs,C3],["Space + maint.",(space+mt)/hrs,C4],["Energy",energy,C1]]);
+    rows("mh-tbl",[["Depreciation / year",money(dep,0)],["Interest on capital / year",money(intr,0)],["Space / year",money(space,0)],["Maintenance / year",money(mt,0)],
+      ["Fixed cost per running hour",money(fixed)],["Energy per hour",money(energy)],["Machine rate (no operator)",money(rate),1]]);
+  }
+  function oee(){
+    var pl=g("oe-planned"),dn=Math.min(g("oe-down"),pl),ic=g("oe-ideal"),tot=g("oe-total"),good=Math.min(g("oe-good"),tot);
+    var run=pl-dn,A=pl>0?run/pl:NaN,P=run>0?(ic*tot/60)/run:NaN,Q=tot>0?good/tot:NaN,O=A*P*Q;
+    var full=good*ic/60,perfLoss=run-ic*tot/60,qLoss=(tot-good)*ic/60;
+    document.getElementById("oe-out").textContent=pct(O*100);
+    document.getElementById("oe-sub").textContent="Availability "+pct(A*100)+" · Performance "+pct(P*100)+" · Quality "+pct(Q*100);
+    bar("oe-bar","oe-leg",[["Fully productive",full,C2],["Downtime",dn,C1],["Speed loss",Math.max(perfLoss,0),C3],["Quality loss",qLoss,C4]]);
+    rows("oe-tbl",[["Run time",num(run,1)+" min"],["Fully productive time",num(full,1)+" min"],["Lost to downtime",num(dn,1)+" min"],["Lost to slow cycles",num(perfLoss,1)+" min"],
+      ["Lost to defects",num(qLoss,1)+" min"],["Good units lost vs. ideal",num(Math.max(pl*60/ic-good,0)),1]]);
+    if(P>1.05)pill("oe-pill","no","Performance above 100%: check the ideal cycle time");
+    else if(O>=0.85)pill("oe-pill","ok","World-class range (85%+)");else if(O>=0.6)pill("oe-pill","warn","Typical range: "+pct(O*100,0));else pill("oe-pill","no","Low OEE: biggest loss is "+[["downtime",dn],["speed",perfLoss],["quality",qLoss]].sort(function(a,b){return b[1]-a[1];})[0][0]);
+  }
+  function takt(){
+    var avail=(g("tk-shift")-g("tk-breaks"))*g("tk-shifts")*60,d=g("tk-demand"),wc=g("tk-work"),bn=g("tk-bottle");
+    var t=d>0?avail/d:NaN,st=t>0?Math.ceil(wc/t):NaN,maxOut=bn>0?Math.floor(avail/bn):NaN,bal=st>0?wc/(st*t)*100:NaN;
+    document.getElementById("tk-out").textContent=num(t,1)+" s";
+    document.getElementById("tk-sub").textContent="One unit every "+num(t,1)+" seconds · "+num(d)+" units in "+num(avail/60)+" minutes";
+    bar("tk-bar","tk-leg",[["Bottleneck cycle",Math.min(bn,t),C2],[bn>t?"Over takt":"Spare",Math.abs(t-bn),bn>t?C1:C3]]);
+    rows("tk-tbl",[["Available time per day",num(avail/60)+" min"],["Stations / operators needed",num(st)],["Line balance efficiency",pct(bal)],
+      ["Max output at bottleneck",num(maxOut)+" / day"],["Gap to demand",num(maxOut-d)+" / day",1]]);
+    if(bn>t)pill("tk-pill","no","Bottleneck is "+num(bn-t,1)+" s slower than takt");else pill("tk-pill","ok","Bottleneck keeps up with takt");
+  }
+  function pricing(){
+    var c=g("pr-cost"),m=g("pr-margin")/100,fe=(g("pr-fee")+g("pr-pay"))/100,fx=g("pr-fixed"),den=1-m-fe,el=document.getElementById("pr-out");
+    if(den<=0){el.textContent="–";document.getElementById("pr-sub").textContent="Margin plus fees must be below 100%";rows("pr-tbl",[]);pill("pr-pill","no","Impossible target");return;}
+    var p=(c+fx)/den,fees=p*fe,profit=p-c-fees-fx,mk=c>0?(p-c)/c*100:NaN;
+    el.textContent=money(p);
+    document.getElementById("pr-sub").textContent="Markup on cost "+pct(mk)+" · profit "+money(profit)+" per unit";
+    bar("pr-bar","pr-leg",[["Cost",c,C2],["Fees",fees+fx,C3],["Profit",profit,C1]]);
+    rows("pr-tbl",[["Unit cost",money(c)],["Channel + payment fees",money(fees)],["Fixed fee",money(fx)],["Gross profit",money(profit)],["Margin on price",pct(profit/p*100)],
+      ["Same markup "+pct(m*100,0)+" would give a margin of",pct(m/(1+m)*100),1]]);
+    pill("pr-pill","ok","Charge "+money(p)+" to keep "+pct(m*100,0)+" after fees");
+  }
+  var fns={"machine-hour-rate":machineRate,"oee":oee,"takt-time":takt,"pricing":pricing,"landed-cost":landed,"cost-per-good-unit":goodUnit,"scrap-cost":scrap,"break-even":breakEven,"payback":payback};
   function calc(){Object.keys(fns).forEach(function(k){if(document.getElementById("v-"+k))fns[k]();});}
   document.querySelectorAll("input").forEach(function(i){i.addEventListener("input",calc);});
   curSel.addEventListener("change",function(){cur=curSel.value;try{localStorage.setItem("sfc-cur",cur);}catch(e){}calc();});
+  // ---- shareable state: inputs <-> URL query
+  var sheet=document.querySelector(".sheet");
+  var defaults={};
+  if(sheet){sheet.querySelectorAll("input").forEach(function(i){defaults[i.id]=i.value;});}
+  var q=new URLSearchParams(location.search);
+  q.forEach(function(v,k){var el=document.getElementById(k);if(el&&el.tagName==="INPUT"&&isFinite(parseFloat(v)))el.value=v;});
+  if(q.get("basis")==="fob"||q.get("basis")==="cif"){var bb=document.querySelector('#lc-basis button[data-b="'+q.get("basis")+'"]');if(bb)bb.click();}
+  if(q.get("cur")&&SYM[q.get("cur")]){cur=q.get("cur");curSel.value=cur;}
+  function stateUrl(){var p=new URLSearchParams();
+    if(sheet)sheet.querySelectorAll("input").forEach(function(i){if(i.value!==defaults[i.id])p.set(i.id,i.value);});
+    if(document.getElementById("lc-basis")&&basis!=="cif")p.set("basis",basis);
+    if(cur!=="USD")p.set("cur",cur);
+    var s=p.toString();return location.pathname+(s?"?"+s:"");}
+  var _calc=calc;calc=function(){_calc();try{history.replaceState(null,"",stateUrl());}catch(e){}};
+  document.querySelectorAll("input").forEach(function(i){i.removeEventListener("input",_calc);i.addEventListener("input",calc);});
+  curSel.addEventListener("change",function(){calc();});
+  document.querySelectorAll("#lc-basis button").forEach(function(b){b.addEventListener("click",function(){setTimeout(calc,0);});});
+  // ---- toolbar
+  var res=sheet&&sheet.querySelector(".result");
+  if(res){
+    var tb=document.createElement("div");tb.className="tools";
+    tb.innerHTML='<button type="button" data-a="link">Copy link</button><button type="button" data-a="copy">Copy results</button><button type="button" data-a="print">Print / PDF</button><button type="button" data-a="reset">Reset</button><span class="toast" role="status"></span>';
+    res.appendChild(tb);
+    var toast=tb.querySelector(".toast");
+    function say(t){toast.textContent=t;setTimeout(function(){toast.textContent="";},2200);}
+    function copy(t){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){say("Copied");},function(){say("Copy failed");});}
+      else{var ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");say("Copied");}catch(e){say("Copy failed");}ta.remove();}}
+    tb.addEventListener("click",function(e){var a=e.target.getAttribute&&e.target.getAttribute("data-a");if(!a)return;
+      if(a==="link")copy(location.origin+stateUrl());
+      if(a==="copy"){var h=sheet.querySelector("h1").textContent,lines=[h,res.querySelector(".kicker").textContent+": "+res.querySelector(".big").textContent,res.querySelector(".sub").textContent];
+        sheet.querySelectorAll(".fields .f").forEach(function(f){var l=f.querySelector("label"),i=f.querySelector("input");if(l&&i)lines.push(l.childNodes[0].textContent.trim()+"\t"+i.value);});
+        res.querySelectorAll("table.bd tr").forEach(function(tr){lines.push(Array.prototype.map.call(tr.cells,function(c){return c.textContent;}).join("\t"));});
+        lines.push(location.origin+stateUrl());copy(lines.join("\n"));}
+      if(a==="print")window.print();
+      if(a==="reset"){Object.keys(defaults).forEach(function(k){document.getElementById(k).value=defaults[k];});var cb=document.querySelector('#lc-basis button[data-b="cif"]');if(cb)cb.click();calc();say("Reset to example");}
+    });
+  }
   calc();
 })();

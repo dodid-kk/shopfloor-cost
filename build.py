@@ -14,7 +14,13 @@ import shutil
 from datetime import date
 from pathlib import Path
 
-from content import ABOUT, PAGES, PRIVACY
+from content import ABOUT, PRIVACY
+from content import PAGES as _BASE_PAGES
+from content_v2 import CATEGORY, CATEGORY_ORDER, CONTACT, NEW_PAGES
+
+_ALL = _BASE_PAGES + NEW_PAGES
+PAGES = sorted(_ALL, key=lambda p: (CATEGORY_ORDER.index(CATEGORY[p["slug"]]), _ALL.index(p)))
+REVIEWED = date.today().strftime("%B %Y")
 
 ROOT = Path(__file__).parent
 OUT = ROOT / "docs"
@@ -29,6 +35,10 @@ CURRENCY = """<label class="cur" for="cur">Currency
         <option value="JPY">JPY ¥</option><option value="KRW">KRW ₩</option>
       </select>
     </label>"""
+
+
+def _cat_id(cat: str) -> str:
+    return "c-" + "".join(ch for ch in cat.lower() if ch.isalnum())
 
 
 def head(title: str, desc: str, path: str, depth: int, extra: str = "") -> str:
@@ -79,7 +89,7 @@ def foot(depth: int, script: bool = True) -> str:
     return f"""
   <footer>
     <span>Estimates for planning only. Confirm duty rates and tax rules with your customs broker or accountant.</span>
-    <span><a href="{up}about/">About</a> · <a href="{up}privacy/">Privacy</a> · Shopfloor/Cost</span>
+    <span><a href="{up}about/">About</a> · <a href="{up}contact/">Contact</a> · <a href="{up}privacy/">Privacy</a> · Shopfloor/Cost</span>
   </footer>
 </div>
 {js}
@@ -89,7 +99,7 @@ def foot(depth: int, script: bool = True) -> str:
 
 
 def ad_slot() -> str:
-    return '<div class="ad" aria-hidden="true">Advertisement</div>' if not ADSENSE_CLIENT else (
+    return '' if not ADSENSE_CLIENT else (
         f'<ins class="adsbygoogle" style="display:block;margin:22px 0" data-ad-client="{ADSENSE_CLIENT}" data-ad-format="auto" '
         'data-full-width-responsive="true"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>')
 
@@ -101,28 +111,39 @@ def calc_page(p: dict) -> str:
     app_ld = {"@context": "https://schema.org", "@type": "WebApplication", "name": p["title"].split(" – ")[0].split(" | ")[0],
               "url": f"{BASE}{p['slug']}/", "applicationCategory": "BusinessApplication", "operatingSystem": "Any",
               "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}
+    crumb_ld = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Calculators", "item": BASE},
+        {"@type": "ListItem", "position": 2, "name": CATEGORY[p["slug"]], "item": f"{BASE}#{_cat_id(CATEGORY[p['slug']])}"},
+        {"@type": "ListItem", "position": 3, "name": p["nav"], "item": f"{BASE}{p['slug']}/"}]}
     ld = (f'<script type="application/ld+json">{json.dumps(app_ld)}</script>\n'
-          f'<script type="application/ld+json">{json.dumps(faq_ld)}</script>')
+          f'<script type="application/ld+json">{json.dumps(faq_ld)}</script>\n'
+          f'<script type="application/ld+json">{json.dumps(crumb_ld)}</script>')
     guide = "".join(f"<h2>{html.escape(h)}</h2>{body}" for h, body in p["guide"])
     faq = "".join(f"<h3>{html.escape(q)}</h3><p>{html.escape(a)}</p>" for q, a in p["faq"])
     related = "".join(f'<a href="../{o["slug"]}/"><b>{html.escape(o["nav"])}</b><span>{html.escape(o["blurb"])}</span></a>'
                       for o in PAGES if o["slug"] != p["slug"])
     return (head(p["title"], p["description"], f'{p["slug"]}/', 1, ld) + top(1, p["slug"])
-            + f'\n  <section class="sheet" id="v-{p["section"]}">{sec}</section>'
-            + f'\n  <article class="guide">{guide}<h2>Frequently asked questions</h2>{faq}'
+            + f'\n  <p class="crumbs"><a href="../">Calculators</a> › <a href="../#{_cat_id(CATEGORY[p["slug"]])}">{html.escape(CATEGORY[p["slug"]])}</a> › {html.escape(p["nav"])}</p>'
+            + f'\n  <section class="sheet" id="v-{p["section"]}">{sec}<div class="print-url">{BASE}{p["slug"]}/</div></section>'
+            + f'\n  <article class="guide"><p class="reviewed">Reviewed {REVIEWED}. Formulas are shown above the guide. <a href="../contact/">Report an error or request a calculator</a>.</p>{guide}<h2>Frequently asked questions</h2>{faq}'
             + f'<h2>More calculators</h2><div class="related">{related}</div></article>' + foot(1))
 
 
 def index_page() -> str:
-    cards = "".join(f'<a href="{p["slug"]}/"><b>{html.escape(p["nav"])}</b><span>{html.escape(p["blurb"])}</span></a>' for p in PAGES)
+    cards = ""
+    for cat in CATEGORY_ORDER:
+        items = "".join(f'<a href="{p["slug"]}/"><b>{html.escape(p["nav"])}</b><span>{html.escape(p["blurb"])}</span></a>'
+                        for p in PAGES if CATEGORY[p["slug"]] == cat)
+        cards += f'<div class="cat" id="{_cat_id(cat)}"><h2>{html.escape(cat)}</h2><div class="cards" style="margin-top:6px">{items}</div></div>'
     body = f"""
   <section class="hero">
     <h1>Manufacturing cost calculators</h1>
-    <p class="lede">Quick, transparent answers to the cost questions that come up on the shop floor and in purchasing: what an imported part really costs, what poor yield adds to every unit, how much scrap costs a year, when a product breaks even and whether a machine pays for itself. Every calculator shows its formula and runs in your browser.</p>
-    <div class="cards">{cards}</div>
+    <p class="lede">Quick, transparent answers to the cost questions that come up on the shop floor and in purchasing: what an imported part really costs, what a machine hour costs, how efficient a line is, how much scrap costs a year, what to charge and whether a machine pays for itself. Every calculator shows its formula, runs in your browser and gives you a link you can share with the numbers filled in.</p>
+    {cards}
+    <p class="reviewed">Missing a calculator you need? <a href="contact/">Tell us</a>; requests that come up often are built first.</p>
   </section>"""
-    return head("Free Manufacturing Cost Calculators – Landed Cost, Yield, Scrap, Break-Even, Payback",
-                "Free manufacturing cost calculators: landed cost with CIF/FOB duty, cost per good unit, scrap and rework cost, break-even and equipment payback.",
+    return head("Free Manufacturing Cost Calculators – Landed Cost, Machine Rate, OEE, Pricing, Payback",
+                "Free manufacturing cost calculators: landed cost, cost per good unit, machine hour rate, scrap cost, OEE, takt time, margin and markup, break-even and equipment payback.",
                 "", 0) + top(0, show_currency=False) + body + foot(0, script=False)
 
 
@@ -146,6 +167,7 @@ def build() -> None:
     for slug, title, desc, inner in [
         ("about", "About – Shopfloor/Cost", "Who makes Shopfloor/Cost and how the calculators work.", ABOUT),
         ("privacy", "Privacy Policy – Shopfloor/Cost", "Privacy policy for Shopfloor/Cost.", PRIVACY.replace("{date}", TODAY)),
+        ("contact", "Contact – Shopfloor/Cost", "Report an error or request a new manufacturing calculator.", CONTACT),
     ]:
         d = OUT / slug; d.mkdir()
         (d / "index.html").write_text(text_page(slug, title, desc, inner), encoding="utf-8")
