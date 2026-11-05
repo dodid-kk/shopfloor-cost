@@ -14,7 +14,8 @@ import shutil
 from datetime import date
 from pathlib import Path
 
-from content import ABOUT, PRIVACY
+from content import PRIVACY
+from content_pages import ABOUT, TERMS
 from content import PAGES as _BASE_PAGES
 from content_v2 import CATEGORY, CATEGORY_ORDER, CONTACT, NEW_PAGES
 
@@ -57,7 +58,10 @@ def head(title: str, desc: str, path: str, depth: int, extra: str = "") -> str:
 <meta property="og:description" content="{html.escape(desc)}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="{BASE}{path}">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23c2410c'/%3E%3Cpath d='M4 12V4h3a2 2 0 010 4H4m5 4l3-8' stroke='white' stroke-width='1.6' fill='none'/%3E%3C/svg%3E">
+<link rel="icon" href="{up}favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="192x192" href="{up}icon-192.png">
+<link rel="apple-touch-icon" href="{up}apple-touch-icon.png">
+<meta property="og:image" content="{BASE}icon-512.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap">
 <link rel="stylesheet" href="{up}assets/style.css">
@@ -89,7 +93,7 @@ def foot(depth: int, script: bool = True) -> str:
     return f"""
   <footer>
     <span>Estimates for planning only. Confirm duty rates and tax rules with your customs broker or accountant.</span>
-    <span><a href="{up}about/">About</a> · <a href="{up}contact/">Contact</a> · <a href="{up}privacy/">Privacy</a> · EverySolver</span>
+    <span><a href="{up}about/">About</a> · <a href="{up}contact/">Contact</a> · <a href="{up}privacy/">Privacy</a> · <a href="{up}terms/">Terms</a> · EverySolver</span>
   </footer>
 </div>
 {js}
@@ -142,8 +146,8 @@ def index_page() -> str:
     {cards}
     <p class="reviewed">Missing a calculator you need? <a href="contact/">Tell us</a>; requests that come up often are built first.</p>
   </section>"""
-    return head("Free Manufacturing Cost Calculators – Landed Cost, Machine Rate, OEE, Pricing, Payback",
-                "Free manufacturing cost calculators: landed cost, cost per good unit, machine hour rate, scrap cost, OEE, takt time, margin and markup, break-even and equipment payback.",
+    return head("Free Manufacturing Cost Calculators | EverySolver",
+                "Free calculators for landed cost, machine hour rate, OEE, takt time, scrap cost, margin, break-even and equipment payback. Formulas shown.",
                 "", 0) + top(0, show_currency=False) + body + foot(0, script=False)
 
 
@@ -158,6 +162,8 @@ def build() -> None:
     (OUT / "assets").mkdir(parents=True)
     shutil.copy(ROOT / "src" / "style.css", OUT / "assets" / "style.css")
     shutil.copy(ROOT / "src" / "calc.js", OUT / "assets" / "calc.js")
+    for f in (ROOT / "src" / "static").iterdir():
+        shutil.copy(f, OUT / f.name)
     (OUT / "index.html").write_text(index_page(), encoding="utf-8")
     urls = [BASE]
     for p in PAGES:
@@ -168,6 +174,7 @@ def build() -> None:
         ("about", "About – EverySolver", "Who makes EverySolver and how the calculators work.", ABOUT),
         ("privacy", "Privacy Policy – EverySolver", "Privacy policy for EverySolver.", PRIVACY.replace("{date}", TODAY)),
         ("contact", "Contact – EverySolver", "Report an error or request a new manufacturing calculator.", CONTACT),
+        ("terms", "Terms of Use – EverySolver", "Terms of use for EverySolver calculators.", TERMS.replace("{date}", TODAY)),
     ]:
         d = OUT / slug; d.mkdir()
         (d / "index.html").write_text(text_page(slug, title, desc, inner), encoding="utf-8")
