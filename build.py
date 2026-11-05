@@ -179,6 +179,9 @@ def build() -> None:
     (OUT / "404.html").write_text(text_page("404", "Page not found – EverySolver", "Page not found.",
                                             f'<h1>Page not found</h1><p><a href="{BASE}">Go to the calculators</a></p>'), encoding="utf-8")
     (OUT / ".nojekyll").write_text("", encoding="utf-8")
+    host = BASE.split("//", 1)[1].strip("/")
+    if "github.io" not in host:  # custom domain for GitHub Pages
+        (OUT / "CNAME").write_text(host + "\n", encoding="utf-8")
     if ADSENSE_CLIENT:
         (OUT / "ads.txt").write_text(f"google.com, {ADSENSE_CLIENT.replace('ca-', '')}, DIRECT, f08c47fec0942fa0\n", encoding="utf-8")
     print(f"built {len(urls)} pages → {OUT} (BASE {BASE})")
