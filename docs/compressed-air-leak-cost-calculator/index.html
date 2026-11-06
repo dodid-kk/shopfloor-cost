@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Compressed Air Leak Cost Calculator – Annual Cost &amp; Payback</title>
+<meta name="description" content="Estimate the yearly electricity cost of compressed air leaks from leak count, hole size or flow, compressor power and hours, plus the payback of repairs.">
+<link rel="canonical" href="https://everysolver.com/compressed-air-leak-cost-calculator/">
+<meta property="og:title" content="Compressed Air Leak Cost Calculator – Annual Cost &amp; Payback">
+<meta property="og:description" content="Estimate the yearly electricity cost of compressed air leaks from leak count, hole size or flow, compressor power and hours, plus the payback of repairs.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://everysolver.com/compressed-air-leak-cost-calculator/">
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="192x192" href="../icon-192.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:image" content="https://everysolver.com/icon-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Compressed Air Leak Cost Calculator", "url": "https://everysolver.com/compressed-air-leak-cost-calculator/", "applicationCategory": "BusinessApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much does a 1/4-inch air leak cost?", "acceptedAnswer": {"@type": "Answer", "text": "At 100 psi a 1/4-inch leak passes roughly 60 CFM. At 20 kW per 100 CFM, 6,000 hours and $0.12 per kWh that is about $8,600 a year."}}, {"@type": "Question", "name": "How do I convert l/s to CFM?", "acceptedAnswer": {"@type": "Answer", "text": "Multiply litres per second by 2.119. 10 l/s is about 21 CFM."}}, {"@type": "Question", "name": "What percentage of compressed air is lost to leaks?", "acceptedAnswer": {"@type": "Answer", "text": "Surveys commonly find 20\u201330% in plants without a regular leak programme, and under 10% in well-managed systems."}}, {"@type": "Question", "name": "Should I lower the system pressure too?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Leak flow falls with pressure, so reducing pressure by even 1 bar cuts leak losses and compressor energy."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Calculators", "item": "https://everysolver.com/"}, {"@type": "ListItem", "position": 2, "name": "Production & quality", "item": "https://everysolver.com/#c-productionquality"}, {"@type": "ListItem", "position": 3, "name": "Air leak cost", "item": "https://everysolver.com/compressed-air-leak-cost-calculator/"}]}</script>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="brand"><a href="../">Every<span>Solver</span></a></div>
+      <div class="tag">Free calculators that solve real work problems · manufacturing &amp; cost</div>
+    </div>
+    <label class="cur" for="cur">Currency
+      <select id="cur">
+        <option value="USD">USD $</option><option value="EUR">EUR €</option><option value="GBP">GBP £</option>
+        <option value="JPY">JPY ¥</option><option value="KRW">KRW ₩</option>
+      </select>
+    </label>
+  </header>
+  <details class="menu"><summary>All calculators (12)</summary><nav class="menu-panel" aria-label="Calculators"><div><h3>Costing</h3><a href="../landed-cost-calculator/">Landed cost</a><a href="../cost-per-good-unit-calculator/">Cost per good unit</a><a href="../scrap-cost-calculator/">Scrap &amp; rework</a><a href="../machine-hour-rate-calculator/">Machine hour rate</a></div><div><h3>Production &amp; quality</h3><a href="../oee-calculator/">OEE</a><a href="../takt-time-calculator/">Takt time</a><a href="../aql-sampling-calculator/">AQL sampling</a><a href="../compressed-air-leak-cost-calculator/" aria-current="page">Air leak cost</a></div><div><h3>Logistics &amp; trade</h3><a href="../freight-class-calculator/">Freight class</a></div><div><h3>Pricing &amp; investment</h3><a href="../break-even-calculator/">Break-even</a><a href="../equipment-payback-calculator/">Equipment payback</a><a href="../margin-markup-calculator/">Margin &amp; markup</a></div></nav></details>
+  <p class="crumbs"><a href="../">Calculators</a> › <a href="../#c-productionquality">Production &amp; quality</a> › Air leak cost</p>
+  <section class="sheet" id="v-air-leak"><h1>Compressed Air Leak Cost Calculator</h1><p class="lede">What your compressed air leaks cost each year in electricity, and how fast a leak repair round pays back.</p><div class="grid"><div class="fields"><div class="f"><label for="al-n">Number of leaks <span class="u"></span></label><input id="al-n" type="number" step="1" value="20" inputmode="decimal"></div><div class="f"><label for="al-cfm">Flow per leak <span class="u">CFM (1 l/s = 2.12 CFM)</span></label><input id="al-cfm" type="number" step="any" value="4.0" inputmode="decimal"></div><div class="f full"><div class="presets" data-for="al-cfm"><span>Hole size at ~100 psi:</span><button type="button" data-v="1.0">1/32″</button><button type="button" data-v="4.0">1/16″</button><button type="button" data-v="16">1/8″</button><button type="button" data-v="63">1/4″</button></div></div><div class="f"><label for="al-kw">Compressor specific power <span class="u">kW per 100 CFM</span></label><input id="al-kw" type="number" step="any" value="20" inputmode="decimal"></div><div class="f"><label for="al-hrs">Operating hours <span class="u">per year</span></label><input id="al-hrs" type="number" step="1" value="6000" inputmode="decimal"></div><div class="f"><label for="al-elec">Electricity price <span class="u">per kWh</span></label><input id="al-elec" type="number" step="any" value="0.12" inputmode="decimal"></div><div class="f"><label for="al-fix">Repair cost <span class="u">per leak</span></label><input id="al-fix" type="number" step="any" value="50" inputmode="decimal"></div></div><div class="result" aria-live="polite"><div class="kicker">Leak cost per year</div><div class="big" id="al-out">–</div><div class="sub" id="al-sub"></div><div class="bar" id="al-bar"></div><div class="legend" id="al-leg"></div><table class="bd" id="al-tbl"></table><div id="al-pill"></div></div></div><div class="notes"><div><h2>How it works</h2><code class="fx">Leak flow   = leaks × CFM per leak
+Power       = leak flow × kW per 100 CFM ÷ 100
+Energy      = power × operating hours
+Cost / year = energy × electricity price
+Payback     = repair cost ÷ cost per day</code></div><div><h2>Where the presets come from</h2><p>The hole-size presets are typical flows at about 100 psi (7 bar) for a rounded orifice, based on US Department of Energy compressed air leak tables. Measured flows from an ultrasonic survey are always better than estimates.</p></div></div><div class="print-url">https://everysolver.com/compressed-air-leak-cost-calculator/</div></section>
+  <article class="guide"><p class="reviewed">Reviewed November 2026. Formulas are shown above the guide. <a href="../contact/">Report an error or request a calculator</a>.</p><h2>Why leaks are expensive</h2>
+<p>Compressed air is one of the most expensive utilities in a factory: a compressor turns only a small share of its electricity into useful air power. Leaks waste that air around the clock, often 20–30% of a compressor's output in plants without a leak programme, and they are silent enough to ignore until someone puts a number on them.</p><h2>Worked example</h2>
+<p>A plant with 20 leaks the size of a 1/16-inch hole, about 4 CFM each at 100 psi, loses 80 CFM. At a typical 20 kW per 100 CFM that is 16 kW of compressor power.</p>
+<table><tr><th>Item</th><th>Value</th></tr>
+<tr><td>Energy (16 kW × 6,000 h)</td><td class="n">96,000 kWh</td></tr>
+<tr><td>Cost at $0.12 per kWh</td><td class="n">$11,520 / year</td></tr>
+<tr><td>Cost per leak</td><td class="n">$576 / year</td></tr>
+<tr><td>Repair round (20 × $50)</td><td class="n">$1,000</td></tr>
+<tr><td><b>Payback</b></td><td class="n"><b>32 days</b></td></tr></table><h2>Getting the inputs right</h2>
+<ul>
+<li><b>Flow per leak:</b> an ultrasonic leak detector gives the best estimate. The presets are typical flows at about 100 psi; at lower pressure, leaks lose less.</li>
+<li><b>Specific power:</b> modern rotary screw compressors use roughly 16–22 kW per 100 CFM at full load. Part-load operation makes each leaked CFM more expensive, not less.</li>
+<li><b>Hours:</b> use the hours the system is pressurised, not the hours production runs. Many systems stay pressurised over weekends.</li>
+</ul><h2>Frequently asked questions</h2><h3>How much does a 1/4-inch air leak cost?</h3><p>At 100 psi a 1/4-inch leak passes roughly 60 CFM. At 20 kW per 100 CFM, 6,000 hours and $0.12 per kWh that is about $8,600 a year.</p><h3>How do I convert l/s to CFM?</h3><p>Multiply litres per second by 2.119. 10 l/s is about 21 CFM.</p><h3>What percentage of compressed air is lost to leaks?</h3><p>Surveys commonly find 20–30% in plants without a regular leak programme, and under 10% in well-managed systems.</p><h3>Should I lower the system pressure too?</h3><p>Yes. Leak flow falls with pressure, so reducing pressure by even 1 bar cuts leak losses and compressor energy.</p><h2>More calculators</h2><div class="related"><a href="../landed-cost-calculator/"><b>Landed cost</b><span>True cost of an imported part after freight, insurance, duty and fees.</span></a><a href="../cost-per-good-unit-calculator/"><b>Cost per good unit</b><span>Unit cost after yield losses, with the scrap cost hidden in every good part.</span></a><a href="../scrap-cost-calculator/"><b>Scrap &amp; rework</b><span>Yearly money lost to scrap and rework, and the saving from a better rate.</span></a><a href="../machine-hour-rate-calculator/"><b>Machine hour rate</b><span>Hourly cost of a machine for quoting, with or without the operator.</span></a><a href="../oee-calculator/"><b>OEE</b><span>Availability, performance and quality from one shift, with the minutes lost to each.</span></a><a href="../takt-time-calculator/"><b>Takt time</b><span>Pace needed to meet demand, stations required and a bottleneck check.</span></a><a href="../aql-sampling-calculator/"><b>AQL sampling</b><span>Sample size and accept/reject numbers for a shipment inspection, with a pass/fail check.</span></a><a href="../freight-class-calculator/"><b>Freight class</b><span>Density and LTL freight class for a pallet under the 2025 NMFC scale.</span></a><a href="../break-even-calculator/"><b>Break-even</b><span>Units per month before a product makes money, and how safe your forecast is.</span></a><a href="../equipment-payback-calculator/"><b>Equipment payback</b><span>Payback period, ROI, NPV and IRR for a new machine or automation cell.</span></a><a href="../margin-markup-calculator/"><b>Margin &amp; markup</b><span>Selling price for a target margin after fees, and the markup it implies.</span></a></div></article>
+  <footer>
+    <span>Estimates for planning only. Confirm duty rates and tax rules with your customs broker or accountant.</span>
+    <span><a href="../about/">About</a> · <a href="../contact/">Contact</a> · <a href="../privacy/">Privacy</a> · <a href="../terms/">Terms</a> · EverySolver</span>
+  </footer>
+</div>
+<script src="../assets/calc.js"></script>
+</body>
+</html>

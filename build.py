@@ -17,9 +17,11 @@ from pathlib import Path
 from content import PRIVACY
 from content_pages import ABOUT, TERMS
 from content import PAGES as _BASE_PAGES
-from content_v2 import CATEGORY, CATEGORY_ORDER, CONTACT, NEW_PAGES
+from content_v2 import CATEGORY as _CAT2, CONTACT, NEW_PAGES
+from content_v3 import CATEGORY_V3, ORDER_V3 as CATEGORY_ORDER, PAGES_V3, RENAME
+CATEGORY = {k: RENAME.get(v, v) for k, v in {**_CAT2, **CATEGORY_V3}.items()}
 
-_ALL = _BASE_PAGES + NEW_PAGES
+_ALL = _BASE_PAGES + NEW_PAGES + PAGES_V3
 PAGES = sorted(_ALL, key=lambda p: (CATEGORY_ORDER.index(CATEGORY[p["slug"]]), _ALL.index(p)))
 REVIEWED = date.today().strftime("%B %Y")
 
@@ -73,9 +75,13 @@ def head(title: str, desc: str, path: str, depth: int, extra: str = "") -> str:
 
 def top(depth: int, current: str = "", show_currency: bool = True) -> str:
     up = "../" * depth
-    nav = "".join(
-        f'<a href="{up}{p["slug"]}/"' + (' aria-current="page"' if p["slug"] == current else "") + f'>{html.escape(p["nav"])}</a>'
-        for p in PAGES)
+    groups = ""
+    for cat in CATEGORY_ORDER:
+        links = "".join(f'<a href="{up}{p["slug"]}/"' + (' aria-current="page"' if p["slug"] == current else "") + f'>{html.escape(p["nav"])}</a>'
+                        for p in PAGES if CATEGORY[p["slug"]] == cat)
+        if links:
+            groups += f'<div><h3>{html.escape(cat)}</h3>{links}</div>'
+    nav = f'<details class="menu"><summary>All calculators ({len(PAGES)})</summary><nav class="menu-panel" aria-label="Calculators">{groups}</nav></details>'
     return f"""
   <header class="top">
     <div>
@@ -84,7 +90,7 @@ def top(depth: int, current: str = "", show_currency: bool = True) -> str:
     </div>
     {CURRENCY if show_currency else ''}
   </header>
-  <nav class="site-nav" aria-label="Calculators">{nav}</nav>"""
+  {nav}"""
 
 
 def foot(depth: int, script: bool = True) -> str:
@@ -133,6 +139,12 @@ def calc_page(p: dict) -> str:
             + f'<h2>More calculators</h2><div class="related">{related}</div></article>' + foot(1))
 
 
+FINDER_JS = """<script>(function(){var f=document.querySelector(".finder");if(!f)return;
+f.addEventListener("input",function(){var q=f.value.trim().toLowerCase();
+document.querySelectorAll(".cards a").forEach(function(a){a.hidden=q&&a.textContent.toLowerCase().indexOf(q)<0;});
+document.querySelectorAll(".cat").forEach(function(c){c.hidden=!c.querySelector(".cards a:not([hidden])");});});})();</script>"""
+
+
 def index_page() -> str:
     cards = ""
     for cat in CATEGORY_ORDER:
@@ -142,13 +154,14 @@ def index_page() -> str:
     body = f"""
   <section class="hero">
     <h1>Manufacturing cost calculators</h1>
-    <p class="lede">Quick, transparent answers to the cost questions that come up on the shop floor and in purchasing: what an imported part really costs, what a machine hour costs, how efficient a line is, how much scrap costs a year, what to charge and whether a machine pays for itself. Every calculator shows its formula, runs in your browser and gives you a link you can share with the numbers filled in.</p>
+    <p class="lede">Quick, transparent answers to the cost questions that come up on the shop floor and in purchasing: what an imported part really costs, what a machine hour costs, how efficient a line is, how much scrap costs a year, what to charge, how many units to inspect, what a freight class will be and whether a machine pays for itself. Every calculator shows its formula, runs in your browser and gives you a link you can share with the numbers filled in.</p>
+    <input class="finder" type="search" placeholder="Find a calculator… (e.g. OEE, freight, margin)" aria-label="Find a calculator">
     {cards}
     <p class="reviewed">Missing a calculator you need? <a href="contact/">Tell us</a>; requests that come up often are built first.</p>
   </section>"""
     return head("Free Manufacturing Cost Calculators | EverySolver",
                 "Free calculators for landed cost, machine hour rate, OEE, takt time, scrap cost, margin, break-even and equipment payback. Formulas shown.",
-                "", 0) + top(0, show_currency=False) + body + foot(0, script=False)
+                "", 0) + top(0, show_currency=False) + body + FINDER_JS + foot(0, script=False)
 
 
 def text_page(slug: str, title: str, desc: str, inner: str) -> str:

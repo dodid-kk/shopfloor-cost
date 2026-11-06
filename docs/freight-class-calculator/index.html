@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>LTL Freight Class Calculator – 2025 NMFC 13-Tier Density Scale</title>
+<meta name="description" content="Calculate pallet density and LTL freight class under the 2025 NMFC density scale (class 50 to 400), compared with the old scale. Inches or centimetres.">
+<link rel="canonical" href="https://everysolver.com/freight-class-calculator/">
+<meta property="og:title" content="LTL Freight Class Calculator – 2025 NMFC 13-Tier Density Scale">
+<meta property="og:description" content="Calculate pallet density and LTL freight class under the 2025 NMFC density scale (class 50 to 400), compared with the old scale. Inches or centimetres.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://everysolver.com/freight-class-calculator/">
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="192x192" href="../icon-192.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:image" content="https://everysolver.com/icon-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "LTL Freight Class Calculator", "url": "https://everysolver.com/freight-class-calculator/", "applicationCategory": "BusinessApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do I calculate freight density?", "acceptedAnswer": {"@type": "Answer", "text": "Multiply length, width and height in inches, divide by 1,728 to get cubic feet, then divide the weight in pounds by the cubic feet."}}, {"@type": "Question", "name": "What freight class is 10 pounds per cubic foot?", "acceptedAnswer": {"@type": "Answer", "text": "Class 92.5 on the current scale, which covers 10 to under 12 pounds per cubic foot."}}, {"@type": "Question", "name": "Why did my freight class change in 2025?", "acceptedAnswer": {"@type": "Answer", "text": "The NMFC moved many items to density-based rating and added classes 55 and 50 for very dense freight, so the same pallet can now rate differently."}}, {"@type": "Question", "name": "Does freight class apply outside the US?", "acceptedAnswer": {"@type": "Answer", "text": "The NMFC is used for LTL freight within North America. Other regions usually price by weight or volumetric weight."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Calculators", "item": "https://everysolver.com/"}, {"@type": "ListItem", "position": 2, "name": "Logistics & trade", "item": "https://everysolver.com/#c-logisticstrade"}, {"@type": "ListItem", "position": 3, "name": "Freight class", "item": "https://everysolver.com/freight-class-calculator/"}]}</script>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="brand"><a href="../">Every<span>Solver</span></a></div>
+      <div class="tag">Free calculators that solve real work problems · manufacturing &amp; cost</div>
+    </div>
+    <label class="cur" for="cur">Currency
+      <select id="cur">
+        <option value="USD">USD $</option><option value="EUR">EUR €</option><option value="GBP">GBP £</option>
+        <option value="JPY">JPY ¥</option><option value="KRW">KRW ₩</option>
+      </select>
+    </label>
+  </header>
+  <details class="menu"><summary>All calculators (12)</summary><nav class="menu-panel" aria-label="Calculators"><div><h3>Costing</h3><a href="../landed-cost-calculator/">Landed cost</a><a href="../cost-per-good-unit-calculator/">Cost per good unit</a><a href="../scrap-cost-calculator/">Scrap &amp; rework</a><a href="../machine-hour-rate-calculator/">Machine hour rate</a></div><div><h3>Production &amp; quality</h3><a href="../oee-calculator/">OEE</a><a href="../takt-time-calculator/">Takt time</a><a href="../aql-sampling-calculator/">AQL sampling</a><a href="../compressed-air-leak-cost-calculator/">Air leak cost</a></div><div><h3>Logistics &amp; trade</h3><a href="../freight-class-calculator/" aria-current="page">Freight class</a></div><div><h3>Pricing &amp; investment</h3><a href="../break-even-calculator/">Break-even</a><a href="../equipment-payback-calculator/">Equipment payback</a><a href="../margin-markup-calculator/">Margin &amp; markup</a></div></nav></details>
+  <p class="crumbs"><a href="../">Calculators</a> › <a href="../#c-logisticstrade">Logistics &amp; trade</a> › Freight class</p>
+  <section class="sheet" id="v-freight-class"><h1>LTL Freight Class Calculator (2025 NMFC Density Scale)</h1><p class="lede">Density-based freight class for a pallet or crate under the 13-tier NMFC scale in force since July 19, 2025, compared with the old 11-tier scale.</p><div class="grid"><div class="fields"><div class="f full"><label for="fc-unit">Units <span class="u"></span></label><select id="fc-unit"><option value="in" selected>inches & pounds</option><option value="cm">centimetres & kilograms</option></select></div><div class="f"><label for="fc-l">Length <span class="u">per piece</span></label><input id="fc-l" type="number" step="any" value="48" inputmode="decimal"></div><div class="f"><label for="fc-w">Width <span class="u">per piece</span></label><input id="fc-w" type="number" step="any" value="40" inputmode="decimal"></div><div class="f"><label for="fc-h">Height <span class="u">per piece, incl. pallet</span></label><input id="fc-h" type="number" step="any" value="48" inputmode="decimal"></div><div class="f"><label for="fc-wt">Weight <span class="u">per piece, incl. pallet</span></label><input id="fc-wt" type="number" step="any" value="500" inputmode="decimal"></div><div class="f full"><label for="fc-n">Pieces <span class="u">identical pallets / crates</span></label><input id="fc-n" type="number" step="1" value="1" inputmode="decimal"></div></div><div class="result" aria-live="polite"><div class="kicker">Freight class (2025 scale)</div><div class="big" id="fc-out">–</div><div class="sub" id="fc-sub"></div><div class="bar" id="fc-bar"></div><div class="legend" id="fc-leg"></div><table class="bd" id="fc-tbl"></table><div id="fc-pill"></div></div></div><div class="notes"><div><h2>How it works</h2><code class="fx">Cubic feet = L × W × H (inches) ÷ 1,728
+Density    = weight (lb) ÷ cubic feet
+Class      = density band on the NMFC scale</code></div><div><h2>Density only applies to some items</h2><p>The density scale classifies freight that is rated by density in the NMFC. Some commodities have their own item class, and fragile or hard-to-stow freight can be rated differently. Confirm the NMFC item with your carrier before booking.</p></div></div><div class="print-url">https://everysolver.com/freight-class-calculator/</div></section>
+  <article class="guide"><p class="reviewed">Reviewed November 2026. Formulas are shown above the guide. <a href="../contact/">Report an error or request a calculator</a>.</p><h2>What changed in July 2025</h2>
+<p>Less-than-truckload carriers in the United States price freight by class: the lower the class, the cheaper the rate per hundredweight. On July 19, 2025 the National Motor Freight Classification moved many more commodities to density-based classes and expanded the density scale from 11 to 13 tiers. The old top band, 30 pounds per cubic foot and denser, was split into three: class 60, class 55 and class 50. Very dense freight can now rate lower than before, while light, bulky freight can rate much higher.</p><h2>The 2025 density scale</h2>
+<table><tr><th>Density (lb per ft³)</th><th>Class</th></tr>
+<tr><td>Under 1</td><td class="n">400</td></tr><tr><td>1 to under 2</td><td class="n">300</td></tr>
+<tr><td>2 to under 4</td><td class="n">250</td></tr><tr><td>4 to under 6</td><td class="n">175</td></tr>
+<tr><td>6 to under 8</td><td class="n">125</td></tr><tr><td>8 to under 10</td><td class="n">100</td></tr>
+<tr><td>10 to under 12</td><td class="n">92.5</td></tr><tr><td>12 to under 15</td><td class="n">85</td></tr>
+<tr><td>15 to under 22.5</td><td class="n">70</td></tr><tr><td>22.5 to under 30</td><td class="n">65</td></tr>
+<tr><td>30 to under 35</td><td class="n">60</td></tr><tr><td>35 to under 50</td><td class="n">55</td></tr>
+<tr><td>50 or more</td><td class="n">50</td></tr></table><h2>Worked example</h2>
+<p>A standard 48 × 40-inch pallet stacked to 48 inches high and weighing 500 pounds occupies 53.3 cubic feet, so its density is 9.38 pounds per cubic foot: class 100. Adding about 34 pounds would lift the density to 10 and drop the shipment to class 92.5. Measuring and weighing accurately matters, because carriers re-weigh and re-measure and bill the corrected class.</p><h2>Common mistakes</h2>
+<ul>
+<li><b>Measuring the box, not the pallet.</b> Use the outside dimensions of the whole handling unit, including the pallet and any overhang.</li>
+<li><b>Forgetting the pallet weight.</b> A wooden pallet adds 30–50 pounds.</li>
+<li><b>Assuming density always applies.</b> Some commodities have a fixed class in their NMFC item. Check the item before booking.</li>
+</ul><h2>Frequently asked questions</h2><h3>How do I calculate freight density?</h3><p>Multiply length, width and height in inches, divide by 1,728 to get cubic feet, then divide the weight in pounds by the cubic feet.</p><h3>What freight class is 10 pounds per cubic foot?</h3><p>Class 92.5 on the current scale, which covers 10 to under 12 pounds per cubic foot.</p><h3>Why did my freight class change in 2025?</h3><p>The NMFC moved many items to density-based rating and added classes 55 and 50 for very dense freight, so the same pallet can now rate differently.</p><h3>Does freight class apply outside the US?</h3><p>The NMFC is used for LTL freight within North America. Other regions usually price by weight or volumetric weight.</p><h2>More calculators</h2><div class="related"><a href="../landed-cost-calculator/"><b>Landed cost</b><span>True cost of an imported part after freight, insurance, duty and fees.</span></a><a href="../cost-per-good-unit-calculator/"><b>Cost per good unit</b><span>Unit cost after yield losses, with the scrap cost hidden in every good part.</span></a><a href="../scrap-cost-calculator/"><b>Scrap &amp; rework</b><span>Yearly money lost to scrap and rework, and the saving from a better rate.</span></a><a href="../machine-hour-rate-calculator/"><b>Machine hour rate</b><span>Hourly cost of a machine for quoting, with or without the operator.</span></a><a href="../oee-calculator/"><b>OEE</b><span>Availability, performance and quality from one shift, with the minutes lost to each.</span></a><a href="../takt-time-calculator/"><b>Takt time</b><span>Pace needed to meet demand, stations required and a bottleneck check.</span></a><a href="../aql-sampling-calculator/"><b>AQL sampling</b><span>Sample size and accept/reject numbers for a shipment inspection, with a pass/fail check.</span></a><a href="../compressed-air-leak-cost-calculator/"><b>Air leak cost</b><span>Yearly electricity lost to compressed air leaks and the payback of fixing them.</span></a><a href="../break-even-calculator/"><b>Break-even</b><span>Units per month before a product makes money, and how safe your forecast is.</span></a><a href="../equipment-payback-calculator/"><b>Equipment payback</b><span>Payback period, ROI, NPV and IRR for a new machine or automation cell.</span></a><a href="../margin-markup-calculator/"><b>Margin &amp; markup</b><span>Selling price for a target margin after fees, and the markup it implies.</span></a></div></article>
+  <footer>
+    <span>Estimates for planning only. Confirm duty rates and tax rules with your customs broker or accountant.</span>
+    <span><a href="../about/">About</a> · <a href="../contact/">Contact</a> · <a href="../privacy/">Privacy</a> · <a href="../terms/">Terms</a> · EverySolver</span>
+  </footer>
+</div>
+<script src="../assets/calc.js"></script>
+</body>
+</html>

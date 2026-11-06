@@ -21,7 +21,24 @@ EXPECT = {
     "margin-markup-calculator": ("pr-out", "$28.31"),
     "break-even-calculator": ("be-out", "2,667 units"),
     "equipment-payback-calculator": ("pb-out", "3.3 years"),
+    "aql-sampling-calculator": ("aq-out", "80 units"),
+    "compressed-air-leak-cost-calculator": ("al-out", "$11,520"),
+    "freight-class-calculator": ("fc-out", "Class 100"),
 }
+# (query string, element, expected) — AQL points checked against the ISO 2859-1 tables
+EXTRA = [
+    ("aql-sampling-calculator/?aq-lot=60", "aq-tbl", "Major · AQL 2.5\taccept 1 / reject 2\nMinor"),
+    ("aql-sampling-calculator/?aq-lot=60", "aq-tbl", "Sample to pull (check all classes)	20 units"),
+    ("aql-sampling-calculator/?aq-lot=40", "aq-tbl", "Major · AQL 2.5 · sample 5	accept 0 / reject 1"),
+    ("aql-sampling-calculator/?aq-lot=5000&aq-major=1.5", "aq-tbl", "Major · AQL 1.5	accept 7 / reject 8"),
+    ("aql-sampling-calculator/?aq-lot=70&aq-major=1.5", "aq-tbl", "Major · AQL 1.5 · sample 8	accept 0 / reject 1"),
+    ("aql-sampling-calculator/?aq-lot=1000000", "aq-tbl", "Major · AQL 2.5 · sample 500	accept 21 / reject 22"),
+    ("aql-sampling-calculator/?aq-fM=6", "aq-pill", "Fail: major 6 ≥ 6"),
+    ("freight-class-calculator/?fc-wt=1700", "fc-out", "Class 60"),
+    ("freight-class-calculator/?fc-wt=1000", "fc-out", "Class 70"),
+    ("freight-class-calculator/?fc-wt=2000", "fc-out", "Class 55"),
+    ("freight-class-calculator/?fc-unit=cm&fc-l=120&fc-w=100&fc-h=120&fc-wt=227", "fc-out", "Class 100"),
+]
 
 handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(DOCS))
 srv = http.server.ThreadingHTTPServer(("127.0.0.1", 8765), handler)
@@ -47,6 +64,28 @@ with sync_playwright() as p:
             fails.append(f"{vw} js errors: {errs}")
         pg.close()
     pg = br.new_page()
+    for qs, el, want in EXTRA:
+        pg.goto(B + qs); pg.wait_for_timeout(200)
+        got = pg.locator("#" + el).inner_text()
+        if want not in got:
+            fails.append(f"{qs}: {want!r} not in {got!r}")
+    # select state goes into the URL; menu and sticky bar exist
+    pg.goto(B + "aql-sampling-calculator/"); pg.select_option("#aq-level", "3"); pg.wait_for_timeout(100)
+    if "aq-level=3" not in pg.url:
+        fails.append("select state not in URL: " + pg.url)
+    if pg.locator("details.menu a").count() != len(EXPECT):
+        fails.append(f"menu links {pg.locator('details.menu a').count()}")
+    pg.set_viewport_size({"width": 390, "height": 800}); pg.goto(B + "machine-hour-rate-calculator/"); pg.wait_for_timeout(300)
+    if not pg.locator(".stick.on").count():
+        fails.append("sticky result bar not shown on phone")
+    pg.click("[data-v='16']") if pg.locator("[data-v='16']").count() else None
+    pg.goto(B + "compressed-air-leak-cost-calculator/"); pg.click(".presets button[data-v='16']"); pg.wait_for_timeout(100)
+    if pg.input_value("#al-cfm") != "16":
+        fails.append("preset chip did not fill")
+    pg.goto(B); pg.fill(".finder", "aql"); pg.wait_for_timeout(100)
+    if pg.locator(".cards a:not([hidden])").count() != 1:
+        fails.append(f"finder shows {pg.locator('.cards a:not([hidden])').count()}")
+    pg.set_viewport_size({"width": 1280, "height": 900})
     # URL state round-trip + reset
     pg.goto(B + "landed-cost-calculator/?lc-qty=10000&basis=fob&cur=EUR"); pg.wait_for_timeout(250)
     out = pg.locator("#lc-out").inner_text()

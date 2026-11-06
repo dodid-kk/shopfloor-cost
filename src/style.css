@@ -102,3 +102,32 @@ footer a{color:var(--muted)}
 }
 .print-url{display:none}
 .reviewed a,.guide a{color:var(--accent)}
+
+.presets{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:.8rem;color:var(--muted)}
+.presets span{margin-right:2px}
+.presets button{font:600 .8rem var(--mono);padding:5px 9px;border:1px solid var(--line);border-radius:999px;background:var(--panel);color:var(--ink);cursor:pointer}
+.presets button:hover{border-color:var(--accent)}
+select{width:100%;font-family:var(--body)}
+.stick{position:fixed;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom,0px));z-index:20;display:none;align-items:center;gap:10px;
+  padding:10px 14px;border:1px solid var(--ink);border-radius:10px;background:var(--panel);color:var(--ink);box-shadow:0 6px 24px rgba(0,0,0,.18);font:inherit;text-align:left;cursor:pointer}
+.stick.on{display:flex}
+.stick span{font:600 .7rem var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);flex:0 1 auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stick b{font:600 1.15rem var(--mono);color:var(--accent);margin-left:auto;white-space:nowrap}
+.stick i{font-style:normal;font-size:.75rem;color:var(--muted);white-space:nowrap}
+@media print{.stick{display:none!important}}
+.menu{position:relative;margin:16px 0 0}
+.menu summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;font:600 .95rem/1 var(--display);letter-spacing:.04em;text-transform:uppercase;
+  padding:11px 14px;border:1px solid var(--ink);border-radius:6px;background:var(--panel)}
+.menu summary::-webkit-details-marker{display:none}
+.menu summary::after{content:"▾";color:var(--accent)}
+.menu[open] summary::after{content:"▴"}
+.menu-panel{position:absolute;z-index:30;left:0;right:0;margin-top:6px;background:var(--panel);border:1px solid var(--ink);border-radius:8px;padding:14px 16px;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px 20px;box-shadow:0 10px 30px rgba(0,0,0,.15)}
+.menu-panel h3{font:700 .78rem var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 4px}
+.menu-panel a{display:block;padding:5px 0;color:var(--ink);text-decoration:none}
+.menu-panel a:hover,.menu-panel a[aria-current="page"]{color:var(--accent)}
+.finder{width:100%;margin:6px 0 4px;padding:11px 12px;font-size:1rem}
+.cards a[hidden]{display:none}
+@media (max-width:420px){.fields{grid-template-columns:1fr 1fr}}
+@media (max-width:340px){.fields{grid-template-columns:1fr}}
+@media (max-width:520px){table.bd td:last-child{white-space:normal;text-align:right}}

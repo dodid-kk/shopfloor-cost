@@ -128,7 +128,63 @@
       ["Same markup "+pct(m*100,0)+" would give a margin of",pct(m/(1+m)*100),1]]);
     pill("pr-pill","ok","Charge "+money(p)+" to keep "+pct(m*100,0)+" after fees");
   }
-  var fns={"machine-hour-rate":machineRate,"oee":oee,"takt-time":takt,"pricing":pricing,"landed-cost":landed,"cost-per-good-unit":goodUnit,"scrap-cost":scrap,"break-even":breakEven,"payback":payback};
+
+  // ---- AQL (ISO 2859-1 Table 1 + Table 2-A, normal single sampling)
+  var AQ_LOT=[8,15,25,50,90,150,280,500,1200,3200,10000,35000,150000,500000,Infinity];
+  var AQ_CODE={"1":"AABCCDEFGHJKLMN","2":"ABCDEFGHJKLMNPQ","3":"BCDEFGHJKLMNPQR"};
+  var AQ_LET="ABCDEFGHJKLMNPQR",AQ_N=[2,3,5,8,13,20,32,50,80,125,200,315,500,800,1250,2000];
+  var AQ_COL={"0.065":4,"0.1":5,"0.15":6,"0.25":7,"0.4":8,"0.65":9,"1":10,"1.5":11,"2.5":12,"4":13,"6.5":14};
+  var AQ_D={14:[0,1],17:[1,2],18:[2,3],19:[3,4],20:[5,6],21:[7,8],22:[10,11],23:[14,15],24:[21,22]};
+  function aqPlan(row,aql,lot){
+    if(!aql)return {n:Math.min(AQ_N[row],lot),ac:0,re:1,l:AQ_LET[row]};
+    var c=AQ_COL[String(aql)],d=row+c;
+    if(d<=13)row+=14-d;else if(d===15)row-=1;else if(d===16)row+=1;else if(d>=25)row-=d-24;
+    row=Math.max(0,Math.min(15,row));var ar=AQ_D[row+c]||[0,1];
+    return {n:Math.min(AQ_N[row],lot),ac:ar[0],re:ar[1],l:AQ_LET[row],all:AQ_N[row]>=lot};
+  }
+  function aql(){
+    var lot=Math.max(Math.round(g("aq-lot")),2),lv=document.getElementById("aq-level").value,i=0;
+    while(lot>AQ_LOT[i])i++;
+    var row=AQ_LET.indexOf(AQ_CODE[lv][i]);
+    var cls=[["Critical",parseFloat(document.getElementById("aq-crit").value),g("aq-fc")],["Major",parseFloat(document.getElementById("aq-major").value),g("aq-fM")],["Minor",parseFloat(document.getElementById("aq-minor").value),g("aq-fm")]];
+    var mx=0,fail=[],rws=[],plans=cls.map(function(c){var p=aqPlan(row,c[1],lot);mx=Math.max(mx,p.n);return p;});
+    cls.forEach(function(c,k){var p=plans[k];
+      rws.push([c[0]+" · AQL "+(c[1]||0)+(p.n!==mx?" · sample "+num(p.n):""),"accept "+p.ac+" / reject "+p.re]);
+      if(c[2]>=p.re)fail.push(c[0].toLowerCase()+" "+num(c[2])+" ≥ "+p.re);});
+    document.getElementById("aq-out").textContent=num(mx)+" units";
+    document.getElementById("aq-sub").textContent="Code letter "+AQ_LET[row]+" · level "+["","I","II","III"][+lv]+" · "+pct(mx/lot*100)+" of the lot"+(mx>=lot?" (inspect all)":"");
+    bar("aq-bar","aq-leg",[["Sampled",mx,C1],["Not sampled",Math.max(lot-mx,0),C3]]);
+    rows("aq-tbl",rws.concat([["Sample to pull (check all classes)",num(mx)+" units",1]]));
+    if(fail.length)pill("aq-pill","no","Fail: "+fail.join(", "));else pill("aq-pill","ok","Pass: all defect counts within limits");
+  }
+  // ---- compressed air leaks
+  function airLeak(){
+    var n=g("al-n"),q=g("al-cfm"),kw=g("al-kw")/100,h=g("al-hrs"),e=g("al-elec"),fx=g("al-fix");
+    var flow=n*q,pw=flow*kw,kwh=pw*h,cost=kwh*e,rep=n*fx,pb=cost>0?rep/(cost/365):NaN;
+    document.getElementById("al-out").textContent=money(cost,0);
+    document.getElementById("al-sub").textContent=money(n>0?cost/n:NaN,0)+" per leak per year · "+num(kwh)+" kWh wasted";
+    bar("al-bar","al-leg",[["Repair cost",rep,C2],["First-year saving after repair",Math.max(cost-rep,0),C1]]);
+    rows("al-tbl",[["Total leak flow",num(flow,1)+" CFM ("+num(flow/2.119,1)+" l/s)"],["Compressor power wasted",num(pw,1)+" kW"],["Energy per year",num(kwh)+" kWh"],
+      ["Cost per year",money(cost,0)],["Repair round ("+num(n)+" leaks)",money(rep,0)],["Payback of repairs",isFinite(pb)?num(Math.ceil(pb))+" days":"–",1]]);
+    if(pb<=90)pill("al-pill","ok","Repairs pay back in "+num(Math.ceil(pb))+" days");else if(isFinite(pb))pill("al-pill","warn","Payback "+num(Math.ceil(pb))+" days");else pill("al-pill","warn","Enter leaks and flow");
+  }
+  // ---- LTL freight class (NMFC full density scale)
+  var FC_NEW=[[1,400],[2,300],[4,250],[6,175],[8,125],[10,100],[12,92.5],[15,85],[22.5,70],[30,65],[35,60],[50,55],[Infinity,50]];
+  var FC_OLD=[[1,400],[2,300],[4,250],[6,175],[8,125],[10,100],[12,92.5],[15,85],[22.5,70],[30,65],[Infinity,60]];
+  function fcClass(d,t){for(var i=0;i<t.length;i++)if(d<t[i][0])return {c:t[i][1],i:i};return {c:t[t.length-1][1],i:t.length-1};}
+  function freight(){
+    var m=document.getElementById("fc-unit").value==="cm",k=m?1/2.54:1,wk=m?2.20462:1;
+    var L=g("fc-l")*k,W=g("fc-w")*k,H=g("fc-h")*k,wt=g("fc-wt")*wk,n=Math.max(Math.round(g("fc-n")),1);
+    var cuft=L*W*H/1728*n,tw=wt*n,d=cuft>0?tw/cuft:NaN,a=fcClass(d,FC_NEW),o=fcClass(d,FC_OLD);
+    document.getElementById("fc-out").textContent="Class "+a.c;
+    document.getElementById("fc-sub").textContent=num(d,2)+" lb per cubic foot · "+num(cuft,1)+" ft³ · "+num(tw)+" lb";
+    var nxt=a.i<FC_NEW.length-1?FC_NEW[a.i][0]:NaN,need=isFinite(nxt)?nxt*cuft-tw:NaN;
+    bar("fc-bar","fc-leg",[["Density",Math.min(d,60),C1],["To 60 pcf",Math.max(60-d,0),C3]]);
+    rows("fc-tbl",[["Total volume",num(cuft,1)+" ft³ ("+num(cuft*0.0283168,2)+" m³)"],["Total weight",num(tw)+" lb ("+num(tw/2.20462)+" kg)"],["Density",num(d,2)+" pcf"],
+      ["Class on pre-July 2025 scale","Class "+o.c],[isFinite(nxt)?"Weight to reach "+num(nxt,1)+" pcf (class "+FC_NEW[a.i+1][1]+")":"Densest band reached",isFinite(need)?"+"+num(Math.ceil(need))+" lb":"–"],["Freight class (2025 scale)","Class "+a.c,1]]);
+    if(a.c!==o.c)pill("fc-pill","warn","Changed from class "+o.c+" under the old scale");else pill("fc-pill","ok","Same class as the old scale");
+  }
+  var fns={"aql":aql,"air-leak":airLeak,"freight-class":freight,"machine-hour-rate":machineRate,"oee":oee,"takt-time":takt,"pricing":pricing,"landed-cost":landed,"cost-per-good-unit":goodUnit,"scrap-cost":scrap,"break-even":breakEven,"payback":payback};
   function calc(){Object.keys(fns).forEach(function(k){if(document.getElementById("v-"+k))fns[k]();});}
   document.querySelectorAll("input").forEach(function(i){i.addEventListener("input",calc);});
   curSel.addEventListener("change",function(){cur=curSel.value;try{localStorage.setItem("sfc-cur",cur);}catch(e){}calc();});
@@ -153,7 +209,7 @@
   var res=sheet&&sheet.querySelector(".result");
   if(res){
     var tb=document.createElement("div");tb.className="tools";
-    tb.innerHTML='<button type="button" data-a="link">Copy link</button><button type="button" data-a="copy">Copy results</button><button type="button" data-a="print">Print / PDF</button><button type="button" data-a="reset">Reset</button><span class="toast" role="status"></span>';
+    tb.innerHTML='<button type="button" data-a="link">Copy link</button><button type="button" data-a="copy">Copy for Excel</button><button type="button" data-a="print">Print / PDF</button><button type="button" data-a="reset">Reset</button><span class="toast" role="status"></span>';
     res.appendChild(tb);
     var toast=tb.querySelector(".toast");
     function say(t){toast.textContent=t;setTimeout(function(){toast.textContent="";},2200);}
@@ -168,6 +224,29 @@
       if(a==="print")window.print();
       if(a==="reset"){Object.keys(defaults).forEach(function(k){document.getElementById(k).value=defaults[k];});var cb=document.querySelector('#lc-basis button[data-b="cif"]');if(cb)cb.click();calc();say("Reset to example");}
     });
+  }
+
+  // ---- selects take part in calc, URL state and reset
+  if(sheet){sheet.querySelectorAll("select").forEach(function(s){defaults[s.id]=s.value;
+    var v=q.get(s.id);if(v!==null&&Array.prototype.some.call(s.options,function(o){return o.value===v;}))s.value=v;
+    s.addEventListener("change",calc);});}
+  var _stateUrl=stateUrl;stateUrl=function(){var u=_stateUrl(),p=new URLSearchParams(u.split("?")[1]||"");
+    if(sheet)sheet.querySelectorAll("select").forEach(function(s){if(s.value!==defaults[s.id])p.set(s.id,s.value);});
+    var s=p.toString();return location.pathname+(s?"?"+s:"");};
+  var resetBtn=document.querySelector('.tools button[data-a="reset"]');
+  if(resetBtn)resetBtn.addEventListener("click",function(){if(sheet)sheet.querySelectorAll("select").forEach(function(s){s.value=defaults[s.id];});calc();});
+  // ---- preset chips fill an input
+  document.querySelectorAll(".presets").forEach(function(box){var t=document.getElementById(box.getAttribute("data-for"));
+    box.addEventListener("click",function(e){var v=e.target.getAttribute&&e.target.getAttribute("data-v");if(v&&t){t.value=v;calc();}});});
+  // ---- sticky result bar on phones while the result panel is off screen
+  if(res&&"IntersectionObserver" in window){
+    var sb=document.createElement("button");sb.type="button";sb.className="stick";sb.setAttribute("aria-label","Jump to result");
+    document.body.appendChild(sb);
+    function upd(){sb.innerHTML='<span>'+res.querySelector(".kicker").textContent+'</span><b>'+res.querySelector(".big").textContent+'</b><i>Result ↓</i>';}
+    ["input","change","click"].forEach(function(ev){document.addEventListener(ev,function(){setTimeout(upd,0);});});setTimeout(upd,0);
+    var mn=document.querySelector("details.menu");if(mn)mn.addEventListener("toggle",function(){sb.style.visibility=mn.open?"hidden":"";});
+    new IntersectionObserver(function(es){sb.classList.toggle("on",!es[0].isIntersecting&&window.innerWidth<761);}).observe(res);
+    sb.addEventListener("click",function(){res.scrollIntoView({behavior:"smooth",block:"start"});});
   }
   calc();
 })();
