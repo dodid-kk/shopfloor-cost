@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>CBM Calculator &amp; Container Loading – 20ft, 40ft, 40ft HC Fill</title>
+<meta name="description" content="Calculate shipment CBM and weight from carton size and count, see how full a 20ft, 40ft or 40ft high-cube container would be, and when LCL is cheaper.">
+<link rel="canonical" href="https://everysolver.com/cbm-container-calculator/">
+<meta property="og:title" content="CBM Calculator &amp; Container Loading – 20ft, 40ft, 40ft HC Fill">
+<meta property="og:description" content="Calculate shipment CBM and weight from carton size and count, see how full a 20ft, 40ft or 40ft high-cube container would be, and when LCL is cheaper.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://everysolver.com/cbm-container-calculator/">
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="192x192" href="../icon-192.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:image" content="https://everysolver.com/icon-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "CBM Calculator & Container Loading", "url": "https://everysolver.com/cbm-container-calculator/", "applicationCategory": "BusinessApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do I calculate CBM?", "acceptedAnswer": {"@type": "Answer", "text": "Multiply length \u00d7 width \u00d7 height in metres for one carton, then multiply by the number of cartons. In centimetres, divide the product by 1,000,000."}}, {"@type": "Question", "name": "How many CBM fit in a 20ft container?", "acceptedAnswer": {"@type": "Answer", "text": "About 33 m\u00b3 inside, and about 25\u201328 m\u00b3 of cartons in practice."}}, {"@type": "Question", "name": "How many CBM fit in a 40ft high-cube?", "acceptedAnswer": {"@type": "Answer", "text": "About 76 m\u00b3 inside and roughly 65\u201368 m\u00b3 of cartons in practice."}}, {"@type": "Question", "name": "What is a revenue ton?", "acceptedAnswer": {"@type": "Answer", "text": "The LCL billing unit: the greater of the cargo volume in cubic metres and its weight in metric tonnes."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Calculators", "item": "https://everysolver.com/"}, {"@type": "ListItem", "position": 2, "name": "Logistics & trade", "item": "https://everysolver.com/#c-logisticstrade"}, {"@type": "ListItem", "position": 3, "name": "CBM & container", "item": "https://everysolver.com/cbm-container-calculator/"}]}</script>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="brand"><a href="../">Every<span>Solver</span></a></div>
+      <div class="tag">Free calculators that solve real work problems · manufacturing &amp; cost</div>
+    </div>
+    <label class="cur" for="cur">Currency
+      <select id="cur">
+        <option value="USD">USD $</option><option value="EUR">EUR €</option><option value="GBP">GBP £</option>
+        <option value="JPY">JPY ¥</option><option value="KRW">KRW ₩</option>
+      </select>
+    </label>
+  </header>
+  <details class="menu"><summary>All calculators (15)</summary><nav class="menu-panel" aria-label="Calculators"><div><h3>Costing</h3><a href="../landed-cost-calculator/">Landed cost</a><a href="../cost-per-good-unit-calculator/">Cost per good unit</a><a href="../scrap-cost-calculator/">Scrap &amp; rework</a><a href="../machine-hour-rate-calculator/">Machine hour rate</a></div><div><h3>Production &amp; quality</h3><a href="../oee-calculator/">OEE</a><a href="../takt-time-calculator/">Takt time</a><a href="../aql-sampling-calculator/">AQL sampling</a><a href="../compressed-air-leak-cost-calculator/">Air leak cost</a><a href="../cpk-calculator/">Cpk</a></div><div><h3>Logistics &amp; trade</h3><a href="../freight-class-calculator/">Freight class</a><a href="../cbm-container-calculator/" aria-current="page">CBM &amp; container</a><a href="../air-freight-chargeable-weight-calculator/">Air chargeable weight</a></div><div><h3>Pricing &amp; investment</h3><a href="../break-even-calculator/">Break-even</a><a href="../equipment-payback-calculator/">Equipment payback</a><a href="../margin-markup-calculator/">Margin &amp; markup</a></div></nav></details>
+  <p class="crumbs"><a href="../">Calculators</a> › <a href="../#c-logisticstrade">Logistics &amp; trade</a> › CBM &amp; container</p>
+  <section class="sheet" id="v-cbm"><h1>CBM &amp; Container Loading Calculator</h1><p class="lede">Total cubic metres and weight of a carton shipment, how full a 20ft, 40ft or 40ft high-cube container would be, and whether LCL is the better choice.</p><div class="grid"><div class="fields"><div class="f full"><label for="cb-unit">Units <span class="u"></span></label><select id="cb-unit"><option value="cm" selected>centimetres & kilograms</option><option value="in">inches & pounds</option></select></div><div class="f"><label for="cb-l">Carton length <span class="u"></span></label><input id="cb-l" type="number" step="any" value="60" inputmode="decimal"></div><div class="f"><label for="cb-w">Carton width <span class="u"></span></label><input id="cb-w" type="number" step="any" value="40" inputmode="decimal"></div><div class="f"><label for="cb-h">Carton height <span class="u"></span></label><input id="cb-h" type="number" step="any" value="40" inputmode="decimal"></div><div class="f"><label for="cb-wt">Carton weight <span class="u">gross</span></label><input id="cb-wt" type="number" step="any" value="18" inputmode="decimal"></div><div class="f full"><label for="cb-n">Number of cartons <span class="u"></span></label><input id="cb-n" type="number" step="1" value="250" inputmode="decimal"></div></div><div class="result" aria-live="polite"><div class="kicker">Total volume</div><div class="big" id="cb-out">–</div><div class="sub" id="cb-sub"></div><div class="bar" id="cb-bar"></div><div class="legend" id="cb-leg"></div><table class="bd" id="cb-tbl"></table><div id="cb-pill"></div></div></div><div class="notes"><div><h2>How it works</h2><code class="fx">Carton CBM = L × W × H (m)
+Total CBM  = carton CBM × cartons
+Fill %     = total CBM ÷ loadable CBM
+LCL charge = max(CBM, tonnes)  (W/M, 1 m³ = 1,000 kg)</code></div><div><h2>Loadable, not internal, volume</h2><p>A 20ft container has about 33 m³ inside, but cartons rarely fill more than 25–28 m³ once you allow for gaps, pallets and door clearance. This calculator uses 28, 58 and 68 m³ as practical loads for 20ft, 40ft and 40ft high-cube.</p></div></div><div class="print-url">https://everysolver.com/cbm-container-calculator/</div></section>
+  <article class="guide"><p class="reviewed">Reviewed November 2026. Formulas are shown above the guide. <a href="../contact/">Report an error or request a calculator</a>.</p><h2>Why CBM drives the sea freight bill</h2>
+<p>Ocean freight is sold by space. A full container (FCL) has a fixed price whatever you put in it, while less-than-container (LCL) cargo is billed per cubic metre or per tonne, whichever is larger. Knowing the cubic metres of a shipment before you book tells you which container to ask for, whether LCL or FCL is cheaper, and how many cartons you can add to fill the space you are already paying for.</p><h2>Worked example</h2>
+<p>250 cartons of 60 × 40 × 40 cm weighing 18 kg each:</p>
+<table><tr><th>Item</th><th>Value</th></tr>
+<tr><td>CBM per carton (0.6 × 0.4 × 0.4)</td><td class="n">0.096 m³</td></tr>
+<tr><td>Total volume</td><td class="n">24.00 m³</td></tr>
+<tr><td>Total weight</td><td class="n">4,500 kg</td></tr>
+<tr><td>20ft fill (28 m³ loadable)</td><td class="n">86%</td></tr>
+<tr><td>Cartons that would fit by volume</td><td class="n">about 291</td></tr>
+<tr><td>LCL charge basis</td><td class="n">24.00 revenue tons</td></tr></table>
+<p>The load fits one 20ft container with room for about 40 more cartons. At 24 m³ a full 20ft is almost always cheaper than paying LCL rates on 24 revenue tons.</p><h2>LCL or FCL?</h2>
+<p>LCL is billed per revenue ton: the larger of the volume in cubic metres and the weight in tonnes. It also carries consolidation and terminal fees on both ends. As a rule of thumb, once a shipment passes 13–15 m³ a 20ft container usually costs the same or less, and it is handled less, which means less damage. Ask for both quotes around that size.</p><h2>Common mistakes</h2>
+<ul>
+<li><b>Planning to the internal volume.</b> A 20ft has about 33 m³ inside, but real loads rarely exceed 25–28 m³.</li>
+<li><b>Ignoring weight limits.</b> Dense goods such as tiles or metal parts hit the payload limit, or national road limits, long before the container is full.</li>
+<li><b>Forgetting pallets.</b> Palletised cargo loses 10–20% of the usable space.</li>
+</ul><h2>Frequently asked questions</h2><h3>How do I calculate CBM?</h3><p>Multiply length × width × height in metres for one carton, then multiply by the number of cartons. In centimetres, divide the product by 1,000,000.</p><h3>How many CBM fit in a 20ft container?</h3><p>About 33 m³ inside, and about 25–28 m³ of cartons in practice.</p><h3>How many CBM fit in a 40ft high-cube?</h3><p>About 76 m³ inside and roughly 65–68 m³ of cartons in practice.</p><h3>What is a revenue ton?</h3><p>The LCL billing unit: the greater of the cargo volume in cubic metres and its weight in metric tonnes.</p><h2>More calculators</h2><div class="related"><a href="../landed-cost-calculator/"><b>Landed cost</b><span>True cost of an imported part after freight, insurance, duty and fees.</span></a><a href="../cost-per-good-unit-calculator/"><b>Cost per good unit</b><span>Unit cost after yield losses, with the scrap cost hidden in every good part.</span></a><a href="../scrap-cost-calculator/"><b>Scrap &amp; rework</b><span>Yearly money lost to scrap and rework, and the saving from a better rate.</span></a><a href="../machine-hour-rate-calculator/"><b>Machine hour rate</b><span>Hourly cost of a machine for quoting, with or without the operator.</span></a><a href="../oee-calculator/"><b>OEE</b><span>Availability, performance and quality from one shift, with the minutes lost to each.</span></a><a href="../takt-time-calculator/"><b>Takt time</b><span>Pace needed to meet demand, stations required and a bottleneck check.</span></a><a href="../aql-sampling-calculator/"><b>AQL sampling</b><span>Sample size and accept/reject numbers for a shipment inspection, with a pass/fail check.</span></a><a href="../compressed-air-leak-cost-calculator/"><b>Air leak cost</b><span>Yearly electricity lost to compressed air leaks and the payback of fixing them.</span></a><a href="../cpk-calculator/"><b>Cpk</b><span>Cp, Cpk and expected defects per million from your measurements.</span></a><a href="../freight-class-calculator/"><b>Freight class</b><span>Density and LTL freight class for a pallet under the 2025 NMFC scale.</span></a><a href="../air-freight-chargeable-weight-calculator/"><b>Air chargeable weight</b><span>Volumetric and chargeable weight for airlines and express couriers.</span></a><a href="../break-even-calculator/"><b>Break-even</b><span>Units per month before a product makes money, and how safe your forecast is.</span></a><a href="../equipment-payback-calculator/"><b>Equipment payback</b><span>Payback period, ROI, NPV and IRR for a new machine or automation cell.</span></a><a href="../margin-markup-calculator/"><b>Margin &amp; markup</b><span>Selling price for a target margin after fees, and the markup it implies.</span></a></div></article>
+  <footer>
+    <span>Estimates for planning only. Confirm duty rates and tax rules with your customs broker or accountant.</span>
+    <span><a href="../about/">About</a> · <a href="../contact/">Contact</a> · <a href="../privacy/">Privacy</a> · <a href="../terms/">Terms</a> · EverySolver</span>
+  </footer>
+</div>
+<script src="../assets/calc.js"></script>
+</body>
+</html>

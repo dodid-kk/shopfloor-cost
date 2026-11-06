@@ -19,9 +19,10 @@ from content_pages import ABOUT, TERMS
 from content import PAGES as _BASE_PAGES
 from content_v2 import CATEGORY as _CAT2, CONTACT, NEW_PAGES
 from content_v3 import CATEGORY_V3, ORDER_V3 as CATEGORY_ORDER, PAGES_V3, RENAME
-CATEGORY = {k: RENAME.get(v, v) for k, v in {**_CAT2, **CATEGORY_V3}.items()}
+from content_v4 import CATEGORY_V4, PAGES_V4
+CATEGORY = {k: RENAME.get(v, v) for k, v in {**_CAT2, **CATEGORY_V3, **CATEGORY_V4}.items()}
 
-_ALL = _BASE_PAGES + NEW_PAGES + PAGES_V3
+_ALL = _BASE_PAGES + NEW_PAGES + PAGES_V3 + PAGES_V4
 PAGES = sorted(_ALL, key=lambda p: (CATEGORY_ORDER.index(CATEGORY[p["slug"]]), _ALL.index(p)))
 REVIEWED = date.today().strftime("%B %Y")
 
@@ -154,7 +155,7 @@ def index_page() -> str:
     body = f"""
   <section class="hero">
     <h1>Manufacturing cost calculators</h1>
-    <p class="lede">Quick, transparent answers to the cost questions that come up on the shop floor and in purchasing: what an imported part really costs, what a machine hour costs, how efficient a line is, how much scrap costs a year, what to charge, how many units to inspect, what a freight class will be and whether a machine pays for itself. Every calculator shows its formula, runs in your browser and gives you a link you can share with the numbers filled in.</p>
+    <p class="lede">Quick, transparent answers to the cost questions that come up on the shop floor and in purchasing: what an imported part really costs, what a machine hour costs, how efficient a line is, how much scrap costs a year, what to charge, how many units to inspect, how full a container will be, what air freight will bill and whether a machine pays for itself. Every calculator shows its formula, runs in your browser and gives you a link you can share with the numbers filled in.</p>
     <input class="finder" type="search" placeholder="Find a calculator… (e.g. OEE, freight, margin)" aria-label="Find a calculator">
     {cards}
     <p class="reviewed">Missing a calculator you need? <a href="contact/">Tell us</a>; requests that come up often are built first.</p>

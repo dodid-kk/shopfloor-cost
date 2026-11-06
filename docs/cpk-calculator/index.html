@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Cpk Calculator – Process Capability Cp, Cpk &amp; PPM Out of Spec</title>
+<meta name="description" content="Calculate Cp, Cpk, Cpu, Cpl and expected ppm out of specification from spec limits and mean and standard deviation, or paste raw measurements.">
+<link rel="canonical" href="https://everysolver.com/cpk-calculator/">
+<meta property="og:title" content="Cpk Calculator – Process Capability Cp, Cpk &amp; PPM Out of Spec">
+<meta property="og:description" content="Calculate Cp, Cpk, Cpu, Cpl and expected ppm out of specification from spec limits and mean and standard deviation, or paste raw measurements.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://everysolver.com/cpk-calculator/">
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="192x192" href="../icon-192.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:image" content="https://everysolver.com/icon-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Cpk Calculator", "url": "https://everysolver.com/cpk-calculator/", "applicationCategory": "BusinessApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is a good Cpk value?", "acceptedAnswer": {"@type": "Answer", "text": "1.33 is the common minimum for production, which means about 63 ppm out of spec for a centred process. 1.67 is often required for safety-critical or newly approved parts."}}, {"@type": "Question", "name": "What is the difference between Cpk and Ppk?", "acceptedAnswer": {"@type": "Answer", "text": "Cpk uses short-term, within-subgroup variation; Ppk uses the overall standard deviation of all data. With a single set of pasted values this calculator gives the overall figure, which is effectively Ppk."}}, {"@type": "Question", "name": "Can Cpk be negative?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. A negative Cpk means the process mean lies outside the specification limits."}}, {"@type": "Question", "name": "How many measurements do I need?", "acceptedAnswer": {"@type": "Answer", "text": "Thirty is a practical minimum; 100 or more across shifts and material lots gives a much more reliable estimate."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Calculators", "item": "https://everysolver.com/"}, {"@type": "ListItem", "position": 2, "name": "Production & quality", "item": "https://everysolver.com/#c-productionquality"}, {"@type": "ListItem", "position": 3, "name": "Cpk", "item": "https://everysolver.com/cpk-calculator/"}]}</script>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="brand"><a href="../">Every<span>Solver</span></a></div>
+      <div class="tag">Free calculators that solve real work problems · manufacturing &amp; cost</div>
+    </div>
+    <label class="cur" for="cur">Currency
+      <select id="cur">
+        <option value="USD">USD $</option><option value="EUR">EUR €</option><option value="GBP">GBP £</option>
+        <option value="JPY">JPY ¥</option><option value="KRW">KRW ₩</option>
+      </select>
+    </label>
+  </header>
+  <details class="menu"><summary>All calculators (15)</summary><nav class="menu-panel" aria-label="Calculators"><div><h3>Costing</h3><a href="../landed-cost-calculator/">Landed cost</a><a href="../cost-per-good-unit-calculator/">Cost per good unit</a><a href="../scrap-cost-calculator/">Scrap &amp; rework</a><a href="../machine-hour-rate-calculator/">Machine hour rate</a></div><div><h3>Production &amp; quality</h3><a href="../oee-calculator/">OEE</a><a href="../takt-time-calculator/">Takt time</a><a href="../aql-sampling-calculator/">AQL sampling</a><a href="../compressed-air-leak-cost-calculator/">Air leak cost</a><a href="../cpk-calculator/" aria-current="page">Cpk</a></div><div><h3>Logistics &amp; trade</h3><a href="../freight-class-calculator/">Freight class</a><a href="../cbm-container-calculator/">CBM &amp; container</a><a href="../air-freight-chargeable-weight-calculator/">Air chargeable weight</a></div><div><h3>Pricing &amp; investment</h3><a href="../break-even-calculator/">Break-even</a><a href="../equipment-payback-calculator/">Equipment payback</a><a href="../margin-markup-calculator/">Margin &amp; markup</a></div></nav></details>
+  <p class="crumbs"><a href="../">Calculators</a> › <a href="../#c-productionquality">Production &amp; quality</a> › Cpk</p>
+  <section class="sheet" id="v-cpk"><h1>Cpk &amp; Process Capability Calculator</h1><p class="lede">Cp, Cpk and the expected parts per million outside specification, from the process mean and standard deviation or from pasted measurements.</p><div class="grid"><div class="fields"><div class="f"><label for="cp-lsl">Lower spec limit <span class="u">LSL</span></label><input id="cp-lsl" type="number" step="any" value="9.9" inputmode="decimal"></div><div class="f"><label for="cp-usl">Upper spec limit <span class="u">USL</span></label><input id="cp-usl" type="number" step="any" value="10.1" inputmode="decimal"></div><div class="f"><label for="cp-mean">Process mean <span class="u">x̄</span></label><input id="cp-mean" type="number" step="any" value="10.02" inputmode="decimal"></div><div class="f"><label for="cp-sd">Standard deviation <span class="u">σ</span></label><input id="cp-sd" type="number" step="any" value="0.025" inputmode="decimal"></div><div class="f full"><label for="cp-data">Or paste measurements <span class="u">overrides mean and σ</span></label><textarea id="cp-data" rows="3" placeholder="10.01 10.03 9.99 10.04 …  (spaces, commas or new lines)"></textarea></div></div><div class="result" aria-live="polite"><div class="kicker">Cpk</div><div class="big" id="cp-out">–</div><div class="sub" id="cp-sub"></div><div class="bar" id="cp-bar"></div><div class="legend" id="cp-leg"></div><table class="bd" id="cp-tbl"></table><div id="cp-pill"></div></div></div><div class="notes"><div><h2>How it works</h2><code class="fx">Cp  = (USL − LSL) ÷ 6σ
+Cpu = (USL − mean) ÷ 3σ
+Cpl = (mean − LSL) ÷ 3σ
+Cpk = min(Cpu, Cpl)
+PPM = normal tail beyond each limit × 1,000,000</code></div><div><h2>What the numbers mean</h2><p>Cp shows how wide the process is compared with the tolerance; Cpk also accounts for how far the mean sits from the centre. A Cpk of 1.33 is the usual minimum for production parts and 1.67 for safety or new-part approval.</p></div></div><div class="print-url">https://everysolver.com/cpk-calculator/</div></section>
+  <article class="guide"><p class="reviewed">Reviewed November 2026. Formulas are shown above the guide. <a href="../contact/">Report an error or request a calculator</a>.</p><h2>What Cp and Cpk tell you</h2>
+<p>Process capability compares the spread of a process with the tolerance a drawing allows. <b>Cp</b> asks whether the process could fit inside the tolerance if it were perfectly centred: tolerance width divided by six standard deviations. <b>Cpk</b> also checks where the process actually sits, taking the nearer of the two limits. A process can have a good Cp and a poor Cpk simply because it runs off centre, and that is usually the cheapest problem to fix.</p><h2>Worked example</h2>
+<p>A shaft diameter has limits of 9.90 to 10.10 mm. The process runs at a mean of 10.02 mm with a standard deviation of 0.025 mm.</p>
+<table><tr><th>Index</th><th>Value</th></tr>
+<tr><td>Cp (0.20 ÷ 0.15)</td><td class="n">1.33</td></tr>
+<tr><td>Cpu ((10.10 − 10.02) ÷ 0.075)</td><td class="n">1.07</td></tr>
+<tr><td>Cpl ((10.02 − 9.90) ÷ 0.075)</td><td class="n">1.60</td></tr>
+<tr><td><b>Cpk</b></td><td class="n"><b>1.07</b></td></tr>
+<tr><td>Expected out of spec</td><td class="n">about 690 ppm</td></tr></table>
+<p>The spread is acceptable but the mean sits 0.02 mm high. Re-centring the process to 10.00 mm would raise Cpk to 1.33 without any new equipment.</p><h2>Using the result correctly</h2>
+<ul>
+<li><b>Check stability first.</b> Capability only predicts the future if the process is in statistical control. Plot a control chart before quoting Cpk.</li>
+<li><b>Use enough data.</b> At least 30 measurements, ideally 100 or more from several shifts, gives a reliable estimate.</li>
+<li><b>Normal data only.</b> The ppm estimate assumes a normal distribution. Skewed characteristics such as flatness or runout need a different method.</li>
+</ul><h2>Frequently asked questions</h2><h3>What is a good Cpk value?</h3><p>1.33 is the common minimum for production, which means about 63 ppm out of spec for a centred process. 1.67 is often required for safety-critical or newly approved parts.</p><h3>What is the difference between Cpk and Ppk?</h3><p>Cpk uses short-term, within-subgroup variation; Ppk uses the overall standard deviation of all data. With a single set of pasted values this calculator gives the overall figure, which is effectively Ppk.</p><h3>Can Cpk be negative?</h3><p>Yes. A negative Cpk means the process mean lies outside the specification limits.</p><h3>How many measurements do I need?</h3><p>Thirty is a practical minimum; 100 or more across shifts and material lots gives a much more reliable estimate.</p><h2>More calculators</h2><div class="related"><a href="../landed-cost-calculator/"><b>Landed cost</b><span>True cost of an imported part after freight, insurance, duty and fees.</span></a><a href="../cost-per-good-unit-calculator/"><b>Cost per good unit</b><span>Unit cost after yield losses, with the scrap cost hidden in every good part.</span></a><a href="../scrap-cost-calculator/"><b>Scrap &amp; rework</b><span>Yearly money lost to scrap and rework, and the saving from a better rate.</span></a><a href="../machine-hour-rate-calculator/"><b>Machine hour rate</b><span>Hourly cost of a machine for quoting, with or without the operator.</span></a><a href="../oee-calculator/"><b>OEE</b><span>Availability, performance and quality from one shift, with the minutes lost to each.</span></a><a href="../takt-time-calculator/"><b>Takt time</b><span>Pace needed to meet demand, stations required and a bottleneck check.</span></a><a href="../aql-sampling-calculator/"><b>AQL sampling</b><span>Sample size and accept/reject numbers for a shipment inspection, with a pass/fail check.</span></a><a href="../compressed-air-leak-cost-calculator/"><b>Air leak cost</b><span>Yearly electricity lost to compressed air leaks and the payback of fixing them.</span></a><a href="../freight-class-calculator/"><b>Freight class</b><span>Density and LTL freight class for a pallet under the 2025 NMFC scale.</span></a><a href="../cbm-container-calculator/"><b>CBM &amp; container</b><span>Shipment cubic metres, container fill and the LCL vs FCL decision.</span></a><a href="../air-freight-chargeable-weight-calculator/"><b>Air chargeable weight</b><span>Volumetric and chargeable weight for airlines and express couriers.</span></a><a href="../break-even-calculator/"><b>Break-even</b><span>Units per month before a product makes money, and how safe your forecast is.</span></a><a href="../equipment-payback-calculator/"><b>Equipment payback</b><span>Payback period, ROI, NPV and IRR for a new machine or automation cell.</span></a><a href="../margin-markup-calculator/"><b>Margin &amp; markup</b><span>Selling price for a target margin after fees, and the markup it implies.</span></a></div></article>
+  <footer>
+    <span>Estimates for planning only. Confirm duty rates and tax rules with your customs broker or accountant.</span>
+    <span><a href="../about/">About</a> · <a href="../contact/">Contact</a> · <a href="../privacy/">Privacy</a> · <a href="../terms/">Terms</a> · EverySolver</span>
+  </footer>
+</div>
+<script src="../assets/calc.js"></script>
+</body>
+</html>

@@ -184,7 +184,55 @@
       ["Class on pre-July 2025 scale","Class "+o.c],[isFinite(nxt)?"Weight to reach "+num(nxt,1)+" pcf (class "+FC_NEW[a.i+1][1]+")":"Densest band reached",isFinite(need)?"+"+num(Math.ceil(need))+" lb":"–"],["Freight class (2025 scale)","Class "+a.c,1]]);
     if(a.c!==o.c)pill("fc-pill","warn","Changed from class "+o.c+" under the old scale");else pill("fc-pill","ok","Same class as the old scale");
   }
-  var fns={"aql":aql,"air-leak":airLeak,"freight-class":freight,"machine-hour-rate":machineRate,"oee":oee,"takt-time":takt,"pricing":pricing,"landed-cost":landed,"cost-per-good-unit":goodUnit,"scrap-cost":scrap,"break-even":breakEven,"payback":payback};
+
+  // ---- CBM & container fit
+  var CB_CT=[["20ft",28,28200],["40ft",58,26700],["40ft HC",68,26500]];
+  function cbm(){
+    var m=document.getElementById("cb-unit").value==="in",k=m?0.0254:0.01,wk=m?0.453592:1,n=Math.max(Math.round(g("cb-n")),0);
+    var c=g("cb-l")*k*g("cb-w")*k*g("cb-h")*k,v=c*n,kg=g("cb-wt")*wk*n,rt=Math.max(v,kg/1000);
+    var fit=null;CB_CT.forEach(function(t){if(!fit&&v<=t[1]&&kg<=t[2])fit=t;});
+    document.getElementById("cb-out").textContent=num(v,2)+" m³";
+    document.getElementById("cb-sub").textContent=num(kg)+" kg · "+num(c,3)+" m³ per carton · "+num(v*35.3147,0)+" ft³";
+    var best=fit||CB_CT[2];
+    bar("cb-bar","cb-leg",[["Used ("+best[0]+")",Math.min(v,best[1]),C1],["Free",Math.max(best[1]-v,0),C3]]);
+    var rws=CB_CT.map(function(t){var ct=Math.floor(t[1]/c);return [t[0]+" ("+t[1]+" m³ loadable)",pct(v/t[1]*100,0)+" full · max ~"+num(ct)+" cartons"];});
+    rows("cb-tbl",rws.concat([["LCL charge basis (W/M)",num(rt,2)+" revenue tons"],["Containers needed if 40ft HC",num(Math.ceil(v/68))+" × 40ft HC",1]]));
+    if(v<15)pill("cb-pill","warn","Under 15 m³: LCL is usually cheaper than a full container");
+    else if(fit)pill("cb-pill","ok","Fits one "+fit[0]+" container ("+pct(v/fit[1]*100,0)+" full)");
+    else pill("cb-pill","no","More than one 40ft HC: split the load or use several containers");
+  }
+  // ---- air chargeable weight
+  function airChg(){
+    var m=document.getElementById("ac-unit").value==="in",dv=document.getElementById("ac-div").value==="5000"?(m?139:5000):(m?166:6000);
+    var n=Math.max(Math.round(g("ac-n")),1),vol=g("ac-l")*g("ac-w")*g("ac-h")*n/dv,act=g("ac-wt")*n,u=m?"lb":"kg",step=m?1:0.5;
+    var chg=Math.ceil(Math.max(vol,act)/step)*step,isVol=vol>act;
+    document.getElementById("ac-out").textContent=num(chg,1)+" "+u;
+    document.getElementById("ac-sub").textContent=(isVol?"Volumetric":"Actual")+" weight applies · "+(act>0?num(vol/act,2)+"× volume-to-weight ratio":"");
+    bar("ac-bar","ac-leg",[["Actual weight",act,C2],["Extra billed for volume",Math.max(vol-act,0),C1]]);
+    rows("ac-tbl",[["Actual weight",num(act,1)+" "+u],["Volumetric weight (÷"+dv+")",num(vol,1)+" "+u],["Volume",m?num(g("ac-l")*g("ac-w")*g("ac-h")*n/1728,2)+" ft³":num(g("ac-l")*g("ac-w")*g("ac-h")*n/1e6,3)+" m³"],
+      ["Chargeable weight",num(chg,1)+" "+u,1]]);
+    if(isVol)pill("ac-pill","warn","Billed for volume: "+num(chg-act,1)+" "+u+" more than the actual weight");else pill("ac-pill","ok","Billed on actual weight");
+  }
+  // ---- Cpk
+  function ncdf(z){var t=1/(1+0.3275911*Math.abs(z)/Math.SQRT2),e=1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-0.284496736)*t+0.254829592)*t*Math.exp(-z*z/2);return z>=0?(1+e)/2:(1-e)/2;}
+  function cpk(){
+    var ta=document.getElementById("cp-data");
+    if(ta&&!ta._b){ta._b=1;ta.addEventListener("input",function(){calc();});}
+    var lsl=g("cp-lsl"),usl=g("cp-usl"),mu=g("cp-mean"),sd=g("cp-sd"),src="entered";
+    var xs=(ta&&ta.value||"").split(/[\s,;]+/).map(parseFloat).filter(isFinite);
+    if(xs.length>=2){mu=xs.reduce(function(a,b){return a+b;},0)/xs.length;sd=Math.sqrt(xs.reduce(function(a,b){return a+(b-mu)*(b-mu);},0)/(xs.length-1));src=xs.length+" measurements";}
+    var cp=(usl-lsl)/(6*sd),cu=(usl-mu)/(3*sd),cl=(mu-lsl)/(3*sd),k=Math.min(cu,cl);
+    var pu=1-ncdf((usl-mu)/sd),pl=ncdf((lsl-mu)/sd),ppm=(pu+pl)*1e6;
+    document.getElementById("cp-out").textContent=isFinite(k)?k.toFixed(2):"–";
+    document.getElementById("cp-sub").textContent="Cp "+(isFinite(cp)?cp.toFixed(2):"–")+" · about "+num(ppm,ppm<10?2:0)+" ppm out of spec · from "+src;
+    bar("cp-bar","cp-leg",[["Below LSL",pl*1e6,C1],["Above USL",pu*1e6,C2]]);
+    rows("cp-tbl",[["Mean",num(mu,4)],["Standard deviation",num(sd,4)],["Cp",cp.toFixed(2)],["Cpu (upper)",cu.toFixed(2)],["Cpl (lower)",cl.toFixed(2)],
+      ["Expected out of spec",num(ppm,ppm<10?2:0)+" ppm ("+pct(ppm/1e4,ppm<100?3:2)+")",1]]);
+    if(!(sd>0)||usl<=lsl)pill("cp-pill","no","Check limits and standard deviation");
+    else if(k>=1.67)pill("cp-pill","ok","Highly capable (Cpk ≥ 1.67)");else if(k>=1.33)pill("cp-pill","ok","Capable (Cpk ≥ 1.33)");
+    else if(k>=1)pill("cp-pill","warn","Marginal: "+(cu<cl?"mean is too close to USL":"mean is too close to LSL"));else pill("cp-pill","no","Not capable: expect "+num(ppm)+" ppm out of spec");
+  }
+  var fns={"cbm":cbm,"air-chargeable":airChg,"cpk":cpk,"aql":aql,"air-leak":airLeak,"freight-class":freight,"machine-hour-rate":machineRate,"oee":oee,"takt-time":takt,"pricing":pricing,"landed-cost":landed,"cost-per-good-unit":goodUnit,"scrap-cost":scrap,"break-even":breakEven,"payback":payback};
   function calc(){Object.keys(fns).forEach(function(k){if(document.getElementById("v-"+k))fns[k]();});}
   document.querySelectorAll("input").forEach(function(i){i.addEventListener("input",calc);});
   curSel.addEventListener("change",function(){cur=curSel.value;try{localStorage.setItem("sfc-cur",cur);}catch(e){}calc();});

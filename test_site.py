@@ -24,6 +24,9 @@ EXPECT = {
     "aql-sampling-calculator": ("aq-out", "80 units"),
     "compressed-air-leak-cost-calculator": ("al-out", "$11,520"),
     "freight-class-calculator": ("fc-out", "Class 100"),
+    "cbm-container-calculator": ("cb-out", "24 m³"),
+    "air-freight-chargeable-weight-calculator": ("ac-out", "90 kg"),
+    "cpk-calculator": ("cp-out", "1.07"),
 }
 # (query string, element, expected) — AQL points checked against the ISO 2859-1 tables
 EXTRA = [
@@ -37,6 +40,12 @@ EXTRA = [
     ("freight-class-calculator/?fc-wt=1700", "fc-out", "Class 60"),
     ("freight-class-calculator/?fc-wt=1000", "fc-out", "Class 70"),
     ("freight-class-calculator/?fc-wt=2000", "fc-out", "Class 55"),
+    ("air-freight-chargeable-weight-calculator/?ac-div=5000", "ac-out", "108 kg"),
+    ("air-freight-chargeable-weight-calculator/?ac-wt=30", "ac-out", "120 kg"),
+    ("cpk-calculator/", "cp-sub", "about 688 ppm"),
+    ("cbm-container-calculator/", "cb-pill", "Fits one 20ft container (86% full)"),
+    ("cbm-container-calculator/?cb-n=100", "cb-pill", "Under 15 m³"),
+    ("cbm-container-calculator/?cb-n=600", "cb-pill", "Fits one 40ft container"),
     ("freight-class-calculator/?fc-unit=cm&fc-l=120&fc-w=100&fc-h=120&fc-wt=227", "fc-out", "Class 100"),
 ]
 

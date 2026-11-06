@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Air Freight Chargeable Weight Calculator – Volumetric Weight 6000 / 5000</title>
+<meta name="description" content="Calculate volumetric (dimensional) weight and the chargeable weight for air cargo (IATA 6000) and express couriers (5000), in cm/kg or inches/pounds.">
+<link rel="canonical" href="https://everysolver.com/air-freight-chargeable-weight-calculator/">
+<meta property="og:title" content="Air Freight Chargeable Weight Calculator – Volumetric Weight 6000 / 5000">
+<meta property="og:description" content="Calculate volumetric (dimensional) weight and the chargeable weight for air cargo (IATA 6000) and express couriers (5000), in cm/kg or inches/pounds.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://everysolver.com/air-freight-chargeable-weight-calculator/">
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="192x192" href="../icon-192.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:image" content="https://everysolver.com/icon-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Air Freight Chargeable Weight Calculator", "url": "https://everysolver.com/air-freight-chargeable-weight-calculator/", "applicationCategory": "BusinessApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do I calculate volumetric weight?", "acceptedAnswer": {"@type": "Answer", "text": "Multiply length \u00d7 width \u00d7 height in centimetres and divide by 6,000 for airlines or 5,000 for express couriers. In inches, divide by 166 or 139 to get pounds."}}, {"@type": "Question", "name": "What is chargeable weight?", "acceptedAnswer": {"@type": "Answer", "text": "The greater of the actual gross weight and the volumetric weight, usually rounded up to the next half kilogram."}}, {"@type": "Question", "name": "Why do couriers use 5000 instead of 6000?", "acceptedAnswer": {"@type": "Answer", "text": "A smaller divisor gives a higher volumetric weight, reflecting the higher handling cost of small parcels in express networks."}}, {"@type": "Question", "name": "Is chargeable weight calculated per piece or per shipment?", "acceptedAnswer": {"@type": "Answer", "text": "Airlines usually calculate it on the whole shipment. Couriers may calculate per package, so check your contract."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Calculators", "item": "https://everysolver.com/"}, {"@type": "ListItem", "position": 2, "name": "Logistics & trade", "item": "https://everysolver.com/#c-logisticstrade"}, {"@type": "ListItem", "position": 3, "name": "Air chargeable weight", "item": "https://everysolver.com/air-freight-chargeable-weight-calculator/"}]}</script>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="brand"><a href="../">Every<span>Solver</span></a></div>
+      <div class="tag">Free calculators that solve real work problems · manufacturing &amp; cost</div>
+    </div>
+    <label class="cur" for="cur">Currency
+      <select id="cur">
+        <option value="USD">USD $</option><option value="EUR">EUR €</option><option value="GBP">GBP £</option>
+        <option value="JPY">JPY ¥</option><option value="KRW">KRW ₩</option>
+      </select>
+    </label>
+  </header>
+  <details class="menu"><summary>All calculators (15)</summary><nav class="menu-panel" aria-label="Calculators"><div><h3>Costing</h3><a href="../landed-cost-calculator/">Landed cost</a><a href="../cost-per-good-unit-calculator/">Cost per good unit</a><a href="../scrap-cost-calculator/">Scrap &amp; rework</a><a href="../machine-hour-rate-calculator/">Machine hour rate</a></div><div><h3>Production &amp; quality</h3><a href="../oee-calculator/">OEE</a><a href="../takt-time-calculator/">Takt time</a><a href="../aql-sampling-calculator/">AQL sampling</a><a href="../compressed-air-leak-cost-calculator/">Air leak cost</a><a href="../cpk-calculator/">Cpk</a></div><div><h3>Logistics &amp; trade</h3><a href="../freight-class-calculator/">Freight class</a><a href="../cbm-container-calculator/">CBM &amp; container</a><a href="../air-freight-chargeable-weight-calculator/" aria-current="page">Air chargeable weight</a></div><div><h3>Pricing &amp; investment</h3><a href="../break-even-calculator/">Break-even</a><a href="../equipment-payback-calculator/">Equipment payback</a><a href="../margin-markup-calculator/">Margin &amp; markup</a></div></nav></details>
+  <p class="crumbs"><a href="../">Calculators</a> › <a href="../#c-logisticstrade">Logistics &amp; trade</a> › Air chargeable weight</p>
+  <section class="sheet" id="v-air-chargeable"><h1>Air Freight Chargeable Weight Calculator</h1><p class="lede">Volumetric (dimensional) weight and the chargeable weight an airline or courier will bill, for the IATA 6000 divisor and the express 5000 divisor.</p><div class="grid"><div class="fields"><div class="f"><label for="ac-unit">Units <span class="u"></span></label><select id="ac-unit"><option value="cm" selected>centimetres & kilograms</option><option value="in">inches & pounds</option></select></div><div class="f"><label for="ac-div">Carrier type <span class="u"></span></label><select id="ac-div"><option value="6000" selected>Airline (IATA 6000 / 166)</option><option value="5000">Express courier (5000 / 139)</option></select></div><div class="f"><label for="ac-l">Length <span class="u">per piece</span></label><input id="ac-l" type="number" step="any" value="60" inputmode="decimal"></div><div class="f"><label for="ac-w">Width <span class="u">per piece</span></label><input id="ac-w" type="number" step="any" value="50" inputmode="decimal"></div><div class="f"><label for="ac-h">Height <span class="u">per piece</span></label><input id="ac-h" type="number" step="any" value="45" inputmode="decimal"></div><div class="f"><label for="ac-wt">Actual weight <span class="u">per piece</span></label><input id="ac-wt" type="number" step="any" value="12" inputmode="decimal"></div><div class="f full"><label for="ac-n">Pieces <span class="u"></span></label><input id="ac-n" type="number" step="1" value="4" inputmode="decimal"></div></div><div class="result" aria-live="polite"><div class="kicker">Chargeable weight</div><div class="big" id="ac-out">–</div><div class="sub" id="ac-sub"></div><div class="bar" id="ac-bar"></div><div class="legend" id="ac-leg"></div><table class="bd" id="ac-tbl"></table><div id="ac-pill"></div></div></div><div class="notes"><div><h2>How it works</h2><code class="fx">Volumetric weight = L × W × H ÷ divisor
+  (cm³ ÷ 6000 or 5000 → kg; in³ ÷ 166 or 139 → lb)
+Chargeable weight = max(actual, volumetric)
+Rounded up to the next 0.5 kg (1 lb)</code></div><div><h2>Why light boxes cost more</h2><p>Aircraft run out of space before they run out of payload, so carriers bill bulky cargo by volume. A shipment is volumetric when it is lighter than 167 kg per cubic metre for airlines (200 kg for couriers). Smaller cartons and less void fill often cut the bill more than lighter packaging.</p></div></div><div class="print-url">https://everysolver.com/air-freight-chargeable-weight-calculator/</div></section>
+  <article class="guide"><p class="reviewed">Reviewed November 2026. Formulas are shown above the guide. <a href="../contact/">Report an error or request a calculator</a>.</p><h2>Actual weight versus volumetric weight</h2>
+<p>Air carriers charge for whichever is larger: what a shipment weighs or how much space it takes. The space is converted into a "volumetric" weight by dividing the volume by a fixed divisor. Airlines use the IATA divisor of 6,000 cm³ per kg (166 in³ per lb). Express couriers such as DHL, FedEx and UPS usually use 5,000 (139 in³ per lb), which makes the same box heavier on paper.</p><h2>Worked example</h2>
+<p>Four cartons of 60 × 50 × 45 cm, each weighing 12 kg:</p>
+<table><tr><th>Item</th><th>Airline (6000)</th><th>Courier (5000)</th></tr>
+<tr><td>Actual weight</td><td class="n">48 kg</td><td class="n">48 kg</td></tr>
+<tr><td>Volumetric weight</td><td class="n">90 kg</td><td class="n">108 kg</td></tr>
+<tr><td><b>Chargeable weight</b></td><td class="n"><b>90 kg</b></td><td class="n"><b>108 kg</b></td></tr></table>
+<p>The cartons are billed at almost twice their real weight. Repacking into smaller cartons with less void fill would cut the bill directly.</p><h2>Ways to lower chargeable weight</h2>
+<ul>
+<li>Right-size cartons and remove empty space; each centimetre counts in all three dimensions.</li>
+<li>Combine small parcels into one consolidated shipment so the airline divisor applies instead of the courier divisor.</li>
+<li>For heavy but compact goods, volumetric weight rarely matters; focus on the actual weight instead.</li>
+</ul><h2>Frequently asked questions</h2><h3>How do I calculate volumetric weight?</h3><p>Multiply length × width × height in centimetres and divide by 6,000 for airlines or 5,000 for express couriers. In inches, divide by 166 or 139 to get pounds.</p><h3>What is chargeable weight?</h3><p>The greater of the actual gross weight and the volumetric weight, usually rounded up to the next half kilogram.</p><h3>Why do couriers use 5000 instead of 6000?</h3><p>A smaller divisor gives a higher volumetric weight, reflecting the higher handling cost of small parcels in express networks.</p><h3>Is chargeable weight calculated per piece or per shipment?</h3><p>Airlines usually calculate it on the whole shipment. Couriers may calculate per package, so check your contract.</p><h2>More calculators</h2><div class="related"><a href="../landed-cost-calculator/"><b>Landed cost</b><span>True cost of an imported part after freight, insurance, duty and fees.</span></a><a href="../cost-per-good-unit-calculator/"><b>Cost per good unit</b><span>Unit cost after yield losses, with the scrap cost hidden in every good part.</span></a><a href="../scrap-cost-calculator/"><b>Scrap &amp; rework</b><span>Yearly money lost to scrap and rework, and the saving from a better rate.</span></a><a href="../machine-hour-rate-calculator/"><b>Machine hour rate</b><span>Hourly cost of a machine for quoting, with or without the operator.</span></a><a href="../oee-calculator/"><b>OEE</b><span>Availability, performance and quality from one shift, with the minutes lost to each.</span></a><a href="../takt-time-calculator/"><b>Takt time</b><span>Pace needed to meet demand, stations required and a bottleneck check.</span></a><a href="../aql-sampling-calculator/"><b>AQL sampling</b><span>Sample size and accept/reject numbers for a shipment inspection, with a pass/fail check.</span></a><a href="../compressed-air-leak-cost-calculator/"><b>Air leak cost</b><span>Yearly electricity lost to compressed air leaks and the payback of fixing them.</span></a><a href="../cpk-calculator/"><b>Cpk</b><span>Cp, Cpk and expected defects per million from your measurements.</span></a><a href="../freight-class-calculator/"><b>Freight class</b><span>Density and LTL freight class for a pallet under the 2025 NMFC scale.</span></a><a href="../cbm-container-calculator/"><b>CBM &amp; container</b><span>Shipment cubic metres, container fill and the LCL vs FCL decision.</span></a><a href="../break-even-calculator/"><b>Break-even</b><span>Units per month before a product makes money, and how safe your forecast is.</span></a><a href="../equipment-payback-calculator/"><b>Equipment payback</b><span>Payback period, ROI, NPV and IRR for a new machine or automation cell.</span></a><a href="../margin-markup-calculator/"><b>Margin &amp; markup</b><span>Selling price for a target margin after fees, and the markup it implies.</span></a></div></article>
+  <footer>
+    <span>Estimates for planning only. Confirm duty rates and tax rules with your customs broker or accountant.</span>
+    <span><a href="../about/">About</a> · <a href="../contact/">Contact</a> · <a href="../privacy/">Privacy</a> · <a href="../terms/">Terms</a> · EverySolver</span>
+  </footer>
+</div>
+<script src="../assets/calc.js"></script>
+</body>
+</html>
