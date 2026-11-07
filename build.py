@@ -31,7 +31,8 @@ OUT = ROOT / "docs"
 BASE = os.getenv("BASE_URL", "https://everysolver.com/").rstrip("/") + "/"
 SECTIONS = json.loads((ROOT / "src" / "sections.json").read_text(encoding="utf-8"))
 TODAY = date.today().isoformat()
-ADSENSE_CLIENT = os.getenv("ADSENSE_CLIENT", "")  # ca-pub-XXXX once approved; empty = no ad script
+ADSENSE_CLIENT = os.getenv("ADSENSE_CLIENT", "")
+CF_BEACON = os.getenv("CF_BEACON", "6ed43d34957a49fcb90ec8e43f7db523")  # Cloudflare Web Analytics (cookieless, public token)  # ca-pub-XXXX once approved; empty = no ad script
 
 CURRENCY = """<label class="cur" for="cur">Currency
       <select id="cur">
@@ -69,6 +70,7 @@ def head(title: str, desc: str, path: str, depth: int, extra: str = "") -> str:
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap">
 <link rel="stylesheet" href="{up}assets/style.css">
 {ads}{extra}
+{('<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon=' + chr(39) + '{"token": "' + CF_BEACON + '"}' + chr(39) + '></script>') if CF_BEACON else ''}
 </head>
 <body>
 <div class="wrap">"""
