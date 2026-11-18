@@ -31,7 +31,7 @@ OUT = ROOT / "docs"
 BASE = os.getenv("BASE_URL", "https://everysolver.com/").rstrip("/") + "/"
 SECTIONS = json.loads((ROOT / "src" / "sections.json").read_text(encoding="utf-8"))
 TODAY = date.today().isoformat()
-ADSENSE_CLIENT = os.getenv("ADSENSE_CLIENT", "")
+ADSENSE_CLIENT = os.getenv("ADSENSE_CLIENT", "ca-pub-1070866326831741")  # AdSense publisher ID (public)
 CF_BEACON = os.getenv("CF_BEACON", "6ed43d34957a49fcb90ec8e43f7db523")  # Cloudflare Web Analytics (cookieless, public token)  # ca-pub-XXXX once approved; empty = no ad script
 
 CURRENCY = """<label class="cur" for="cur">Currency
